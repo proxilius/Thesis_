@@ -167,7 +167,7 @@ namespace SimaSzamlaAdatbazissal
 
             worksheet.Columns["A:E"].ColumnWidth = 17.57;
 
-            worksheet.Cells[1, 1] = "ID";
+            worksheet.Cells[1, 1] = "Id";
             worksheet.Cells[1, 2] = "Megnevezés";
             worksheet.Cells[1, 3] = "Összeg";
             worksheet.Cells[1, 4] = "Dátum";
