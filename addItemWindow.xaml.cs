@@ -31,20 +31,27 @@ namespace SimaSzamlaAdatbazissal
         {
             SzamlaEntities uj = new SzamlaEntities();
             Szamlak temp = new Szamlak();
-            temp.Megnevezes = textBoxMegnevezes.Text;
-            temp.Osszeg = Convert.ToInt32(textBoxOsszeg.Text);
-            temp.Datum = textBoxDatum.Text;
-            uj.Szamlak.Add(temp);
-            uj.SaveChanges();
-            //MainWindow.OC.Add(temp);
-            //MainWindow.dgrid.ItemsSource=uj.Szamlak.ToList();
+            try
+            {
+                temp.Megnevezes = textBoxMegnevezes.Text;
+                temp.Osszeg = Convert.ToInt32(textBoxOsszeg.Text);
+                temp.Datum = textBoxDatum.Text;
+                uj.Szamlak.Add(temp);
+                uj.SaveChanges();
 
-            m.SzamlaDatagrid.ItemsSource = uj.Szamlak.ToList();
-            m.szamol2();
-            
-            MessageBox.Show("Sikeres hozzáadás");
-            this.Close();
-            m.Show();
+                m.SzamlaDatagrid.ItemsSource = uj.Szamlak.ToList();
+                m.makeSubtotal(uj.Szamlak.ToList());
+
+                m.szamol2();
+
+                MessageBox.Show("Sikeres hozzáadás");
+                this.Close();
+                m.Show();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Hibásan adtad meg valamely paramétert");
+            }
         }
 
         private void refresh(object sender, System.ComponentModel.CancelEventArgs e)

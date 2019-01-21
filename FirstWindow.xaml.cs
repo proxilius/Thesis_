@@ -23,6 +23,8 @@ namespace SimaSzamlaAdatbazissal
         {
             InitializeComponent();
             CenterWindowOnScreen();
+            string filePath = "D:/Szakdolgozat/1.iteracio/SimaSzamlaAdatbazissal/bin/Release/paper.jpg";
+            image.Source= new BitmapImage(new Uri(filePath));
         }
 
         private void goToSzamlak(object sender, RoutedEventArgs e)

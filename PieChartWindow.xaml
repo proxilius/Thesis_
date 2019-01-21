@@ -1,0 +1,19 @@
+﻿<Window x:Class="SimaSzamlaAdatbazissal.PieChartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SimaSzamlaAdatbazissal"
+        xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+
+        mc:Ignorable="d"
+        Title="PieChartWindow" Height="338.346" Width="451.128">
+    <Grid>
+        <chartingToolkit:Chart  Name="PieChart1" Title="Számla tételek" Width="380"
+            VerticalAlignment="Top" Margin="20,20,20,20" Height="262" HorizontalAlignment="Left">
+            <chartingToolkit:PieSeries DependentValuePath="Value"
+            IndependentValuePath="Key" ItemsSource="{Binding}"
+            IsSelectionEnabled="True" />
+        </chartingToolkit:Chart>
+    </Grid>
+</Window>

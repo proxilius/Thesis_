@@ -18,5 +18,6 @@ namespace SimaSzamlaAdatbazissal
         public string Megnevezes { get; set; }
         public int Osszeg { get; set; }
         public string Datum { get; set; }
+        
     }
 }

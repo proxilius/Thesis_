@@ -16,6 +16,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
+
+
 namespace SimaSzamlaAdatbazissal
 {
     /// <summary>
@@ -27,9 +30,18 @@ namespace SimaSzamlaAdatbazissal
         public static SzamlaEntities DB=new SzamlaEntities();
         public static DataGrid dgrid;
         public static ObservableCollection<Szamlak> OC = new ObservableCollection<Szamlak>();
-        public int ossz = 0;
+        List<Subtotal> SubtotalsList = new List<Subtotal>();
         public event PropertyChangedEventHandler PropertyChanged;
         Microsoft.Office.Interop.Excel.Range chartRange;
+        private ViewModel vm;
+        
+        public class Subtotal
+        {
+            public int sub { get; set; }
+            
+        }
+        List<Subtotal> subtotals = new List<Subtotal>();
+        
         protected void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
@@ -38,11 +50,23 @@ namespace SimaSzamlaAdatbazissal
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
-
+        public void makeSubtotal(List<Szamlak>a)
+        {
+            SubtotalsList.Clear();
+            int subb = 0;
+            foreach (var i in a)
+            {
+                subb += i.Osszeg;
+                SubtotalsList.Add(new Subtotal() { sub = subb });
+            }
+            ReszosszegDatagrid.ItemsSource = SubtotalsList;
+        }
 
         public MainWindow()
         {
             
+            
+            SubtotalsList.Clear();
             List<Szamlak> a = DB.Szamlak.ToList();
             InitializeComponent();
             foreach (var i in a) 
@@ -50,45 +74,22 @@ namespace SimaSzamlaAdatbazissal
                 OC.Add(i);
             }
             SzamlaDatagrid.ItemsSource = DB.Szamlak.ToList();
-            //SzamlaDatagrid.ItemsSource = OC;
+            makeSubtotal(a);
             dgrid = SzamlaDatagrid;
             szamol2();
             OnPropertyChanged("szamol2");
+            
         }
 
-        //private void szamol(List<Szamlak>lista)
-        //{
-        //    int osszeg = 0;
-        //    foreach (var i in lista)
-        //    {
-        //        int temp = Convert.ToInt32(i.Osszeg);
-        //        osszeg += temp;
-        //    }
-
-        //    Osszesen.Text = Convert.ToString(osszeg);
-            
-        //}
+        
         public  void szamol2()
         {
             int osszeg = DB.Szamlak.Sum(f => f.Osszeg);
             Osszesen.Text = osszeg.ToString();
-            
-
-
         }
 
         private void HozzaAd(object sender, RoutedEventArgs e)
         {
-
-            //Szamlak temp = new Szamlak();
-            //temp.Megnevezes = textBox.Text;
-            //temp.Osszeg = Convert.ToInt32( textBox1.Text);
-            //temp.Datum = textBox2.Text;
-            //sz.Szamlak.Add(temp);
-            //sz.SaveChanges();
-            //szamol2();
-            //SzamlaDatagrid.ItemsSource = sz.Szamlak.ToList();
-            //MessageBox.Show("Sikeres hozzáadás");
             addItemWindow newItem = new addItemWindow();
             newItem.Show();
             Close();
@@ -108,6 +109,7 @@ namespace SimaSzamlaAdatbazissal
                 SzamlaDatagrid.ItemsSource = DB.Szamlak.ToList();
                 //SzamlaDatagrid.ItemsSource = OC;
                 szamol2();
+                makeSubtotal(DB.Szamlak.ToList());
             }
             catch
             {
@@ -163,12 +165,13 @@ namespace SimaSzamlaAdatbazissal
             Microsoft.Office.Interop.Excel._Workbook workbook = excel.Workbooks.Add(Type.Missing);
             Microsoft.Office.Interop.Excel._Worksheet worksheet = workbook.ActiveSheet;
 
-            worksheet.Columns["A:D"].ColumnWidth = 17.57;
+            worksheet.Columns["A:E"].ColumnWidth = 17.57;
 
             worksheet.Cells[1, 1] = "ID";
             worksheet.Cells[1, 2] = "Megnevezés";
             worksheet.Cells[1, 3] = "Összeg";
             worksheet.Cells[1, 4] = "Dátum";
+            worksheet.Cells[1, 5] = "Részösszeg";
 
             int index = 2;
             foreach (var i in DB.Szamlak)
@@ -179,6 +182,12 @@ namespace SimaSzamlaAdatbazissal
                 worksheet.Cells[index, 4] = i.Datum;
                 index++;
             }
+            index = 2;
+            foreach (var j in SubtotalsList)
+            {
+                worksheet.Cells[index, 5] = j.sub;
+                index++;
+            }
 
             workbook.SaveAs("SimaSzámla");
             excel.Visible = true;
@@ -186,6 +195,17 @@ namespace SimaSzamlaAdatbazissal
             MessageBox.Show("Az excel fájl sikeresen létrejött!");
 
         }
-        
+
+        private void GraphWindow(object sender, RoutedEventArgs e)
+        {
+            GrafikonWindow gw = new GrafikonWindow();
+            gw.Show();
+        }
+
+        private void PieChartWindow(object sender, RoutedEventArgs e)
+        {
+            PieChartWindow pie = new PieChartWindow();
+            pie.Show();
+        }
     }
 }

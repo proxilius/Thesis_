@@ -1,0 +1,21 @@
+﻿<Window x:Class="SimaSzamlaAdatbazissal.GrafikonWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SimaSzamlaAdatbazissal"
+        xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+
+        mc:Ignorable="d"
+        Title="GrafikonWindow" Height="322.556" Width="540.226">
+    <Grid>
+        <chartingToolkit:Chart Height="262" HorizontalAlignment="Left" 
+            Margin="33,0,0,0" Name="ColumnChart1" Title="Számlatétel"
+            VerticalAlignment="Bottom" Width="410" >
+            <chartingToolkit:ColumnSeries DependentValuePath="Value" Title="Összeg"  IndependentValuePath="Key" ItemsSource="{Binding}"
+            IsSelectionEnabled="True"></chartingToolkit:ColumnSeries>
+             
+
+        </chartingToolkit:Chart>
+    </Grid>
+</Window>
