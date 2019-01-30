@@ -12,11 +12,13 @@ namespace SimaSzamlaAdatbazissal
     using System;
     using System.Collections.Generic;
     
-    public partial class Szamlak
+    public partial class CommercialPapers
     {
-        public int Id { get; set; }
-        public string Megnevezes { get; set; }
-        public int Osszeg { get; set; }
-        public string Datum { get; set; }
+        public int cp_id { get; set; }
+        public string cp_name { get; set; }
+        public string cp_date { get; set; }
+        public Nullable<System.TimeSpan> cp_time { get; set; }
+        public Nullable<int> cp_value { get; set; }
+        public Nullable<int> cp_amount { get; set; }
     }
 }

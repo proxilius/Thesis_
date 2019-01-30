@@ -85,13 +85,14 @@
                         <TextBlock FontWeight="Bold" FontSize="20" Margin="0,0,-128,0" TextDecorations="{x:Null}" HorizontalAlignment="Center">Értékpapírszámlák</TextBlock>
                     </Grid>
                     <Grid Grid.Row="1" Margin="0,0,10,0">
-                        <DataGrid Margin="0,-130,0,130" >
+                        <DataGrid Margin="0,-130,0,130" Name="CommercialPapersDataGrid" AutoGenerateColumns="False" >
                             <DataGrid.Columns>
-                                <DataGridTextColumn  ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="ID"/>
-                                <DataGridTextColumn  ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Értékpapír neve"/>
-                                <DataGridTextColumn  ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Vásárlás dátuma" FrameworkElement.FlowDirection="RightToLeft"/>
-                                <DataGridTextColumn  ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="2*" Header="Vásárlás dátumán összeg"/>
-                                <DataGridTextColumn  ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Darabszám"/>
+                                <DataGridTextColumn Binding="{Binding cp_id}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="ID"/>
+                                <DataGridTextColumn Binding="{Binding cp_name}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="1.2*" Header="Értékpapír neve"/>
+                                <DataGridTextColumn Binding="{Binding cp_date}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Vásárlás dátuma" FrameworkElement.FlowDirection="RightToLeft"/>
+                                <DataGridTextColumn Binding="{Binding cp_time}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Időpontja"/>
+                                <DataGridTextColumn Binding="{Binding cp_value}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="2*" Header="Vásárlás dátumán összeg"/>
+                                <DataGridTextColumn Binding="{Binding cp_amount}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Darabszám"/>
 
                             </DataGrid.Columns>
 

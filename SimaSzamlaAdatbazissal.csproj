@@ -131,6 +131,9 @@
     <Compile Include="addItemWindow.xaml.cs">
       <DependentUpon>addItemWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CommercialPapers.cs">
+      <DependentUpon>SzamlaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="FirstWindow.xaml.cs">
       <DependentUpon>FirstWindow.xaml</DependentUpon>
     </Compile>
@@ -141,6 +144,11 @@
       <DependentUpon>PieChartWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Subtotals.cs" />
+    <Compile Include="SzamlaDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SzamlaDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Szamlak.cs">
       <DependentUpon>SzamlaModel.tt</DependentUpon>
     </Compile>
@@ -224,6 +232,17 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SzamlaModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="SzamlaDataSet.xsc">
+      <DependentUpon>SzamlaDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="SzamlaDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SzamlaDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SzamlaDataSet.xss">
+      <DependentUpon>SzamlaDataSet.xsd</DependentUpon>
+    </None>
     <None Include="SzamlaModel.edmx.diagram">
       <DependentUpon>SzamlaModel.edmx</DependentUpon>
     </None>

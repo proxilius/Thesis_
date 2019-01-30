@@ -64,8 +64,7 @@ namespace SimaSzamlaAdatbazissal
 
         public MainWindow()
         {
-            
-            
+
             SubtotalsList.Clear();
             List<Szamlak> a = DB.Szamlak.ToList();
             InitializeComponent();
@@ -74,6 +73,7 @@ namespace SimaSzamlaAdatbazissal
                 OC.Add(i);
             }
             SzamlaDatagrid.ItemsSource = DB.Szamlak.ToList();
+            CommercialPapersDataGrid.ItemsSource = DB.CommercialPapers.ToList();
             makeSubtotal(a);
             dgrid = SzamlaDatagrid;
             szamol2();

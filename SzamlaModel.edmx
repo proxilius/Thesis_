@@ -4,7 +4,18 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SzamlaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SzamlaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CommercialPapers">
+          <Key>
+            <PropertyRef Name="cp_id" />
+          </Key>
+          <Property Name="cp_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cp_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="cp_date" Type="nvarchar" MaxLength="50" />
+          <Property Name="cp_time" Type="time" Precision="7" />
+          <Property Name="cp_value" Type="int" />
+          <Property Name="cp_amount" Type="int" />
+        </EntityType>
         <EntityType Name="Szamlak">
           <Key>
             <PropertyRef Name="Id" />
@@ -15,10 +26,10 @@
           <Property Name="Datum" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityContainer Name="SzamlaModelStoreContainer">
+          <EntitySet Name="CommercialPapers" EntityType="Self.CommercialPapers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Szamlak" EntityType="Self.Szamlak" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SzamlaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -33,7 +44,19 @@
         </EntityType>
         <EntityContainer Name="SzamlaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Szamlak" EntityType="Self.Szamlak" />
+          <EntitySet Name="CommercialPapers" EntityType="SzamlaModel.CommercialPapers" />
         </EntityContainer>
+        <EntityType Name="CommercialPapers">
+          <Key>
+            <PropertyRef Name="cp_id" />
+          </Key>
+          <Property Name="cp_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cp_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cp_date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cp_time" Type="Time" Precision="7" />
+          <Property Name="cp_value" Type="Int32" />
+          <Property Name="cp_amount" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -47,6 +70,18 @@
                 <ScalarProperty Name="Megnevezes" ColumnName="Megnevezes" />
                 <ScalarProperty Name="Osszeg" ColumnName="Osszeg" />
                 <ScalarProperty Name="Datum" ColumnName="Datum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CommercialPapers">
+            <EntityTypeMapping TypeName="SzamlaModel.CommercialPapers">
+              <MappingFragment StoreEntitySet="CommercialPapers">
+                <ScalarProperty Name="cp_amount" ColumnName="cp_amount" />
+                <ScalarProperty Name="cp_value" ColumnName="cp_value" />
+                <ScalarProperty Name="cp_time" ColumnName="cp_time" />
+                <ScalarProperty Name="cp_date" ColumnName="cp_date" />
+                <ScalarProperty Name="cp_name" ColumnName="cp_name" />
+                <ScalarProperty Name="cp_id" ColumnName="cp_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
