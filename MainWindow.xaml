@@ -11,7 +11,7 @@
 
 
     <Grid>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" VerticalAlignment="Top" Height="371"  >
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" VerticalAlignment="Top" Height="371" Margin="10,10,0,-10" Width="949"  >
 
             <TabItem Header="Számlák">
                 <Grid>
@@ -103,8 +103,14 @@
                             <ColumnDefinition Width="14*"/>
                             <ColumnDefinition Width="25*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Content="Új értékpapír vásárlás" Margin="0,-129,0,254" Click="addCommercialPaper" Grid.ColumnSpan="2"></Button>
-                        <TextBox x:Name="amountBox" Margin="0,-36,6,172"/>
+                        <Button Content="Új értékpapír vásárlás" Margin="0,-129,-3,254" Click="addCommercialPaper" Grid.ColumnSpan="2"></Button>
+                        <TextBox x:Name="amountBox" Margin="0,-31,6,167"/>
+                        <TextBox x:Name="fifoname" Margin="0,10,6,126"/>
+                        <TextBox x:Name="fifoamount" Margin="0,40,6,96"/>
+                        <Button Content="FIFO eladás" Margin="3,72,-3,53"  Grid.ColumnSpan="2" Click="sellFifo"></Button>
+                        <Label x:Name="labeldarab" Content="Darabszám" Margin="10,-31,28,167" Grid.Column="1"/>
+                        <Label x:Name="labeldarab_Copy" Content="Értékpapír neve" Margin="10,10,28,126" Grid.Column="1"/>
+                        <Label x:Name="labeldarab_Copy1" Content="Darabszám" Margin="10,40,28,96" Grid.Column="1"/>
                     </Grid>
                     <Button Content="Értékpapír eladás" Margin="0,79,0,45" Grid.Column="1" Click="sellCommercialPaper"/>
 
@@ -128,6 +134,7 @@
                 </Grid>
 
             </TabItem>
+            <Label x:Name="label1" Content="Label" Height="100" Width="100"/>
 
 
 

@@ -249,5 +249,24 @@ namespace SimaSzamlaAdatbazissal
                 MessageBox.Show("Hiba, jelölje ki az eladni kivánt értékpapírt.");
             }
         }
+
+        private void sellFifo(object sender, RoutedEventArgs e)
+        {
+            string name = fifoname.Text;
+            List<CommercialPapers> cplist = new List<CommercialPapers>();
+            List<CommercialPapers> sortedcplist = new List<CommercialPapers>();
+            cplist =DB.CommercialPapers.Where(d => d.cp_name == name).ToList();
+            string nevek="";
+            sortedcplist =cplist.OrderBy(d => d.cp_date).ToList();
+            foreach (var i in sortedcplist)
+            {
+                nevek += i.cp_name+","+i.cp_date+"\n";
+            }
+            
+
+            MessageBox.Show("Név\n" + nevek);
+             
+
+        }
     }
 }
