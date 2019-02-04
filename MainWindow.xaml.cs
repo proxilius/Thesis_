@@ -207,5 +207,47 @@ namespace SimaSzamlaAdatbazissal
             PieChartWindow pie = new PieChartWindow();
             pie.Show();
         }
+
+        private void addCommercialPaper(object sender, RoutedEventArgs e)
+        {
+            addCommercialPaperWindow commercialwindow = new addCommercialPaperWindow();
+            commercialwindow.Show();
+            Close();
+        }
+
+        private void sellCommercialPaper(object sender, RoutedEventArgs e)
+        {
+            int id = 0;
+            try
+            {
+                id = (CommercialPapersDataGrid.SelectedItem as CommercialPapers).cp_id;
+                CommercialPapers selling = new CommercialPapers();
+                selling = DB.CommercialPapers.Where(d => d.cp_id == id).First();
+                int cpamount = selling.cp_amount;
+                if (cpamount - Convert.ToInt32(amountBox.Text) >= 0)
+                {
+                    selling.cp_amount = selling.cp_amount - Convert.ToInt32(amountBox.Text);
+                    if (selling.cp_amount == 0)
+                    {
+                        DB.CommercialPapers.Remove(selling);
+                    }
+                    if (selling.cp_amount > 0)
+                    {
+                        DB.SaveChanges();
+                        CommercialPapersDataGrid.ItemsSource = DB.CommercialPapers.ToList();
+                    }
+                }   
+                else
+                {
+                    MessageBox.Show("Nincs annyi darab, mint amennyit el szeretne adni.");
+                }
+                
+
+            }
+            catch
+            {
+                MessageBox.Show("Hiba, jelölje ki az eladni kivánt értékpapírt.");
+            }
+        }
     }
 }

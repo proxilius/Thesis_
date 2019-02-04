@@ -1,0 +1,24 @@
+﻿<Window x:Class="SimaSzamlaAdatbazissal.addCommercialPaperWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SimaSzamlaAdatbazissal"
+        mc:Ignorable="d"
+        Title="addCommercialPaperWindow" Height="372.18" Width="417.293">
+    <Grid>
+        <Label x:Name="label" Content="Értékpapír felvétel" Margin="10,10,0,0" VerticalAlignment="Top" Width="272" FontWeight="Bold" FontSize="20"/>
+        <Label x:Name="label1" Content="Értékpapír neve" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" Width="132"/>
+        <Label x:Name="label1_Copy" Content="Vásárlás dátuma" HorizontalAlignment="Left" Margin="10,96,0,0" VerticalAlignment="Top" Width="132"/>
+        <Label x:Name="label1_Copy1" Content="Vásárlás időpontja" HorizontalAlignment="Left" Margin="10,127,0,0" VerticalAlignment="Top" Width="132"/>
+        <Label x:Name="label1_Copy2" Content="Értéke" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top" Width="132"/>
+        <Label x:Name="label1_Copy3" Content="Darabszám" HorizontalAlignment="Left" Margin="10,189,0,0" VerticalAlignment="Top" Width="132"/>
+        <TextBox x:Name="tbName" Text="" HorizontalAlignment="Left" Margin="156,70,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" Height="21"/>
+        <TextBox x:Name="tbDate" HorizontalAlignment="Left" Margin="156,101,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" Height="21"/>
+        <TextBox x:Name="tbTime" HorizontalAlignment="Left" Margin="156,132,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" Height="21"/>
+        <TextBox x:Name="tbValue" HorizontalAlignment="Left" Margin="156,163,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" Height="21"/>
+        <TextBox x:Name="tbAmount" HorizontalAlignment="Left" Margin="156,194,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" Height="21"/>
+        <Button x:Name="addCommPaper" Content="Értékpapír rögzítése" HorizontalAlignment="Left" Margin="10,251,0,0" VerticalAlignment="Top" Width="149" Height="42" Click="addCommercialToDatabase"/>
+
+    </Grid>
+</Window>

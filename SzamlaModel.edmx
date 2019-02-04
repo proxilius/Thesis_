@@ -10,20 +10,20 @@
             <PropertyRef Name="cp_id" />
           </Key>
           <Property Name="cp_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="cp_name" Type="nvarchar" MaxLength="50" />
-          <Property Name="cp_date" Type="nvarchar" MaxLength="50" />
-          <Property Name="cp_time" Type="time" Precision="7" />
-          <Property Name="cp_value" Type="int" />
-          <Property Name="cp_amount" Type="int" />
+          <Property Name="cp_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="cp_date" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="cp_time" Type="time" Precision="7" Nullable="false" />
+          <Property Name="cp_value" Type="int" Nullable="false" />
+          <Property Name="cp_amount" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Szamlak">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Megnevezes" Type="nvarchar" MaxLength="50" />
-          <Property Name="Osszeg" Type="int" />
-          <Property Name="Datum" Type="nvarchar" MaxLength="50" />
+          <Property Name="Megnevezes" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Osszeg" Type="int" Nullable="false" />
+          <Property Name="Datum" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityContainer Name="SzamlaModelStoreContainer">
           <EntitySet Name="CommercialPapers" EntityType="Self.CommercialPapers" Schema="dbo" store:Type="Tables" />
@@ -38,9 +38,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Megnevezes" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Osszeg" Type="Int32" />
-          <Property Name="Datum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Megnevezes" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Osszeg" Type="Int32" Nullable="false" />
+          <Property Name="Datum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityContainer Name="SzamlaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Szamlak" EntityType="Self.Szamlak" />
@@ -51,11 +51,11 @@
             <PropertyRef Name="cp_id" />
           </Key>
           <Property Name="cp_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="cp_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="cp_date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="cp_time" Type="Time" Precision="7" />
-          <Property Name="cp_value" Type="Int32" />
-          <Property Name="cp_amount" Type="Int32" />
+          <Property Name="cp_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cp_date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cp_time" Type="Time" Precision="7" Nullable="false" />
+          <Property Name="cp_value" Type="Int32" Nullable="false" />
+          <Property Name="cp_amount" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>

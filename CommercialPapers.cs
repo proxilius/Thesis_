@@ -17,8 +17,8 @@ namespace SimaSzamlaAdatbazissal
         public int cp_id { get; set; }
         public string cp_name { get; set; }
         public string cp_date { get; set; }
-        public Nullable<System.TimeSpan> cp_time { get; set; }
-        public Nullable<int> cp_value { get; set; }
-        public Nullable<int> cp_amount { get; set; }
+        public System.TimeSpan cp_time { get; set; }
+        public int cp_value { get; set; }
+        public int cp_amount { get; set; }
     }
 }
