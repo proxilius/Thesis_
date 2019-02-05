@@ -67,13 +67,19 @@ namespace SimaSzamlaAdatbazissal
 
             SubtotalsList.Clear();
             List<Szamlak> a = DB.Szamlak.ToList();
+            
             InitializeComponent();
             foreach (var i in a) 
             {
                 OC.Add(i);
             }
             SzamlaDatagrid.ItemsSource = DB.Szamlak.ToList();
-            CommercialPapersDataGrid.ItemsSource = DB.CommercialPapers.ToList();
+            List<CommercialPapers> b = DB.CommercialPapers.ToList();
+            foreach (var i in b)
+            {
+                i.sumcom = i.cp_value * i.cp_amount;
+            }
+            CommercialPapersDataGrid.ItemsSource = b;//DB.CommercialPapers.ToList();
             makeSubtotal(a);
             dgrid = SzamlaDatagrid;
             szamol2();
@@ -234,7 +240,13 @@ namespace SimaSzamlaAdatbazissal
                     if (selling.cp_amount > 0)
                     {
                         DB.SaveChanges();
-                        CommercialPapersDataGrid.ItemsSource = DB.CommercialPapers.ToList();
+                        List<CommercialPapers> b = DB.CommercialPapers.ToList();
+                        foreach (var i in b)
+                        {
+                            i.sumcom = i.cp_value * i.cp_amount;
+                        }
+                        CommercialPapersDataGrid.ItemsSource = b;
+                        
                     }
                 }   
                 else

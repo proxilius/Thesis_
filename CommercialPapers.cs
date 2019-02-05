@@ -20,5 +20,6 @@ namespace SimaSzamlaAdatbazissal
         public System.TimeSpan cp_time { get; set; }
         public int cp_value { get; set; }
         public int cp_amount { get; set; }
+        public int sumcom { get; set; }
     }
 }

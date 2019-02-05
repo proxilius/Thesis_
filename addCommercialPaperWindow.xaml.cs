@@ -41,7 +41,13 @@ namespace SimaSzamlaAdatbazissal
                 uj.SaveChanges();
 
                 m.SzamlaDatagrid.ItemsSource = uj.Szamlak.ToList();
-                m.CommercialPapersDataGrid.ItemsSource = uj.CommercialPapers.ToList();
+                List<CommercialPapers> b = uj.CommercialPapers.ToList();
+                foreach (var i in b)
+                {
+                    i.sumcom = i.cp_value * i.cp_amount;
+                }
+                m.CommercialPapersDataGrid.ItemsSource = b;
+                
                
 
                 MessageBox.Show("Sikeres hozzáadás");
