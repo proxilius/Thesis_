@@ -7,6 +7,7 @@
       <Diagram DiagramId="2045313f9c9b4bc99099f349ff6e6d19" Name="Diagram1">
         <EntityTypeShape EntityType="SzamlaModel.Szamlak" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SzamlaModel.CommercialPapers" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="SzamlaModel.RateTable" Width="1.5" PointX="0.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

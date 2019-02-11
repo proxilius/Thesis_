@@ -136,15 +136,26 @@
     </Compile>
     <Compile Include="CommercialPapers.cs">
       <DependentUpon>SzamlaModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="FirstWindow.xaml.cs">
       <DependentUpon>FirstWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FreezePriceWindow.xaml.cs">
+      <DependentUpon>FreezePriceWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GrafikonWindow.xaml.cs">
       <DependentUpon>GrafikonWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="PieChartWindow.xaml.cs">
       <DependentUpon>PieChartWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RateDiagramWindow.xaml.cs">
+      <DependentUpon>RateDiagramWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RateTable.cs">
+      <DependentUpon>SzamlaModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Subtotals.cs" />
     <Compile Include="SzamlaDataSet.Designer.cs">
@@ -154,21 +165,25 @@
     </Compile>
     <Compile Include="Szamlak.cs">
       <DependentUpon>SzamlaModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="SzamlaModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SzamlaModel.Context.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="SzamlaModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SzamlaModel.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="SzamlaModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SzamlaModel.edmx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="ViewModel.cs" />
     <Compile Include="ViewModelUserControl.xaml.cs">
@@ -183,6 +198,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FirstWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FreezePriceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -203,6 +222,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PieChartWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RateDiagramWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -238,6 +261,7 @@
     <EntityDeploy Include="SzamlaModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SzamlaModel.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EntityDeploy>
     <None Include="SzamlaDataSet.xsc">
       <DependentUpon>SzamlaDataSet.xsd</DependentUpon>
@@ -252,6 +276,7 @@
     </None>
     <None Include="SzamlaModel.edmx.diagram">
       <DependentUpon>SzamlaModel.edmx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -265,11 +290,13 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SzamlaModel.edmx</DependentUpon>
       <LastGenOutput>SzamlaModel.Context.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SzamlaModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>SzamlaModel.edmx</DependentUpon>
       <LastGenOutput>SzamlaModel.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Szamla_log.ldf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

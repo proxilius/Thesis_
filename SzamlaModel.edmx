@@ -16,6 +16,16 @@
           <Property Name="cp_value" Type="int" Nullable="false" />
           <Property Name="cp_amount" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="RateTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameOfpaper" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="DateOf" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TimeOf" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Szamlak">
           <Key>
             <PropertyRef Name="Id" />
@@ -27,6 +37,7 @@
         </EntityType>
         <EntityContainer Name="SzamlaModelStoreContainer">
           <EntitySet Name="CommercialPapers" EntityType="Self.CommercialPapers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RateTable" EntityType="Self.RateTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Szamlak" EntityType="Self.Szamlak" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -45,6 +56,7 @@
         <EntityContainer Name="SzamlaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Szamlak" EntityType="Self.Szamlak" />
           <EntitySet Name="CommercialPapers" EntityType="SzamlaModel.CommercialPapers" />
+          <EntitySet Name="RateTable" EntityType="SzamlaModel.RateTable" />
         </EntityContainer>
         <EntityType Name="CommercialPapers">
           <Key>
@@ -56,6 +68,16 @@
           <Property Name="cp_time" Type="Time" Precision="7" Nullable="false" />
           <Property Name="cp_value" Type="Int32" Nullable="false" />
           <Property Name="cp_amount" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RateTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameOfpaper" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="DateOf" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TimeOf" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -82,6 +104,17 @@
                 <ScalarProperty Name="cp_date" ColumnName="cp_date" />
                 <ScalarProperty Name="cp_name" ColumnName="cp_name" />
                 <ScalarProperty Name="cp_id" ColumnName="cp_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RateTable">
+            <EntityTypeMapping TypeName="SzamlaModel.RateTable">
+              <MappingFragment StoreEntitySet="RateTable">
+                <ScalarProperty Name="TimeOf" ColumnName="TimeOf" />
+                <ScalarProperty Name="DateOf" ColumnName="DateOf" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="NameOfpaper" ColumnName="NameOfpaper" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

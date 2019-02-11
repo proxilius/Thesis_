@@ -5,12 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimaSzamlaAdatbazissal"
         mc:Ignorable="d"
-        Title="Nyitooldal" Height="349.5" Width="472.133">
+        Title="Nyitooldal" Height="391.5" Width="472.133">
     <Grid>
-        <Button x:Name="buttonToSzamlak" Content="Tovább" HorizontalAlignment="Left" Margin="308,68,0,0" VerticalAlignment="Top" Width="102" Click="goToSzamlak" FontFamily="Times New Roman" FontSize="14" FontWeight="Bold"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="70,25,72,0" TextWrapping="Wrap" Text="Nyitóoldal" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="30" Width="135"/>
-        <Label x:Name="label" Content="A számla megtekentése: " HorizontalAlignment="Left" Margin="78,65,0,0" VerticalAlignment="Top" Width="209" FontFamily="Times New Roman" FontSize="14"/>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="208" Margin="84,101,0,0" VerticalAlignment="Top" Width="370"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="89*"/>
+            <ColumnDefinition Width="375*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="buttonToSzamlak" Content="Tovább" HorizontalAlignment="Left" Margin="219,68,0,0" VerticalAlignment="Top" Width="102" Click="goToSzamlak" FontFamily="Times New Roman" FontSize="14" FontWeight="Bold" Grid.Column="1"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="75,25,166,0" TextWrapping="Wrap" Text="Nyitóoldal" VerticalAlignment="Top" FontFamily="Times New Roman" FontSize="30" Width="134" Grid.Column="1"/>
+        <Label x:Name="label" Content="A számla megtekentése: " HorizontalAlignment="Left" Margin="78,65,0,0" VerticalAlignment="Top" Width="209" FontFamily="Times New Roman" FontSize="14" Grid.ColumnSpan="2"/>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="208" Margin="54,143,0,0" VerticalAlignment="Top" Width="370" Grid.ColumnSpan="2"/>
+        <Label x:Name="label1" Content="Árfolyam megadása: " HorizontalAlignment="Left" Margin="78,91,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.158,-0.288" Grid.ColumnSpan="2"/>
+        <Button x:Name="button" Content="Árfolyam" Grid.Column="1" HorizontalAlignment="Left" Margin="219,97,0,0" VerticalAlignment="Top" Width="102" FontWeight="Bold" FontFamily="Times New Roman" FontSize="14" Click="showPriceWindow"/>
 
     </Grid>
 </Window>

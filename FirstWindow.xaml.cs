@@ -41,5 +41,11 @@ namespace SimaSzamlaAdatbazissal
             this.Left = (screenWidth / 2) - (windowWidth / 2);
             this.Top = (screenHeight / 2) - (windowHeight / 2);
         }
+
+        private void showPriceWindow(object sender, RoutedEventArgs e)
+        {
+            FreezePriceWindow FPW = new FreezePriceWindow();
+            FPW.Show();
+        }
     }
 }
