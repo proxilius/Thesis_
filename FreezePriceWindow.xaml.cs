@@ -25,6 +25,7 @@ namespace SimaSzamlaAdatbazissal
         public FreezePriceWindow()
         {
             InitializeComponent();
+            dataGridRate.ItemsSource = DB.RateTable.ToList();
             
 
         }
@@ -42,7 +43,8 @@ namespace SimaSzamlaAdatbazissal
             actual.TimeOf = todayTime;
             DB.RateTable.Add(actual);
             DB.SaveChanges();
-           
+            dataGridRate.ItemsSource = DB.RateTable.ToList();
+
 
         }
 

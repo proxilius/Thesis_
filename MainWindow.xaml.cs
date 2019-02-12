@@ -224,6 +224,9 @@ namespace SimaSzamlaAdatbazissal
         private void sellCommercialPaper(object sender, RoutedEventArgs e)
         {
             int id = 0;
+            int actualPriceOfPaper=0;//Az adott ertekpapir arfolyama, utolso ertek
+            int winning = 0;
+            
             try
             {
                 id = (CommercialPapersDataGrid.SelectedItem as CommercialPapers).cp_id;
@@ -232,10 +235,28 @@ namespace SimaSzamlaAdatbazissal
                 int cpamount = selling.cp_amount;
                 if (cpamount - Convert.ToInt32(amountBox.Text) >= 0)
                 {
+                    foreach (var i in DB.RateTable.ToList())
+                    {
+                        if (i.NameOfpaper.Contains(selling.cp_name))
+                        {
+                            actualPriceOfPaper = i.Price;
+                        }
+                    }
+
                     selling.cp_amount = selling.cp_amount - Convert.ToInt32(amountBox.Text);
+                    winning = (actualPriceOfPaper * Convert.ToInt32(amountBox.Text)) - (Convert.ToInt32(amountBox.Text) * selling.cp_value);
                     if (selling.cp_amount == 0)
                     {
+                        
                         DB.CommercialPapers.Remove(selling);
+                        DB.SaveChanges();
+                        List<CommercialPapers> b = DB.CommercialPapers.ToList();
+                        foreach (var i in b)
+                        {
+                            i.sumcom = i.cp_value * i.cp_amount;
+                        }
+                        CommercialPapersDataGrid.ItemsSource = b;
+
                     }
                     if (selling.cp_amount > 0)
                     {
@@ -248,6 +269,7 @@ namespace SimaSzamlaAdatbazissal
                         CommercialPapersDataGrid.ItemsSource = b;
                         
                     }
+                    MessageBox.Show("A nyereseg: "+winning+"\n Az értékpapír árfolyama: "+actualPriceOfPaper);
                 }   
                 else
                 {
@@ -265,6 +287,8 @@ namespace SimaSzamlaAdatbazissal
         private void sellFifo(object sender, RoutedEventArgs e)
         {
             string name = fifoname.Text;
+            int amount = Convert.ToInt32(fifoamount.Text);//ennyit akarunk eladni
+            int actualPaperAmount = 0;
             List<CommercialPapers> cplist = new List<CommercialPapers>();
             List<CommercialPapers> sortedcplist = new List<CommercialPapers>();
             cplist =DB.CommercialPapers.Where(d => d.cp_name == name).ToList();
@@ -273,10 +297,41 @@ namespace SimaSzamlaAdatbazissal
             foreach (var i in sortedcplist)
             {
                 nevek += i.cp_name+","+i.cp_date+"\n";
+                if (i.cp_name.Contains(name)) actualPaperAmount+=i.cp_amount;//ennyi van
+            }
+            if (actualPaperAmount >= amount)
+            {
+                MessageBox.Show("Név\n" + nevek + "\n" + actualPaperAmount);
+                foreach (var i in sortedcplist)
+                {
+                    int actualdb = i.cp_amount - amount;//10-15
+                    if (actualdb <= 0)
+                    {
+                        DB.CommercialPapers.Remove(i);
+                        DB.SaveChanges();
+                        amount = amount - i.cp_amount;
+                    }
+                    else
+                    {
+                        i.cp_amount = i.cp_amount - amount;
+                        DB.SaveChanges();
+                        List<CommercialPapers> b = DB.CommercialPapers.ToList();
+                        foreach (var k in b)
+                        {
+                            k.sumcom = k.cp_value * k.cp_amount;
+                        }
+                        CommercialPapersDataGrid.ItemsSource = b;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nincs elég értékpapír!");
             }
             
 
-            MessageBox.Show("Név\n" + nevek);
+           
              
 
         }

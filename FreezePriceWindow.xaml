@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimaSzamlaAdatbazissal"
         mc:Ignorable="d"
-        Title="FreezePriceWindow" Height="300" Width="500.752">
+        Title="FreezePriceWindow" Height="744.361" Width="500.752">
     <Grid Height="267" VerticalAlignment="Top">
         <Label x:Name="label" Content="Árfolyam rögzítése" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
         <Label x:Name="label1" Content="Értékpapír neve:" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top"/>
@@ -25,6 +25,15 @@
         <TextBox x:Name="textBoxcompaperPrice" HorizontalAlignment="Left" Height="23" Margin="357,164,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="buttonOK" Content="OK" HorizontalAlignment="Left" Margin="10,215,0,0" VerticalAlignment="Top" Width="75" Click="putPriceToDatabase"/>
         <Button x:Name="buttondiagram" Content="Diagram" HorizontalAlignment="Left" Margin="125,215,0,0" VerticalAlignment="Top" Width="75" Click="showDiagram"/>
+        <DataGrid x:Name="dataGridRate" HorizontalAlignment="Left" Height="354" Margin="10,282,0,-369" VerticalAlignment="Top" Width="467" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Header="ID" Width="*"/>
+                <DataGridTextColumn Binding="{Binding NameOfpaper}" ClipboardContentBinding="{x:Null}" Header="Név" Width="*"/>
+                <DataGridTextColumn Binding="{Binding Price}" ClipboardContentBinding="{x:Null}" Header="Érték" Width="*"/>
+                <DataGridTextColumn Binding="{Binding DateOf}" ClipboardContentBinding="{x:Null}" Header="Dátum" Width="*"/>
+                <DataGridTextColumn Binding="{Binding TimeOf}" ClipboardContentBinding="{x:Null}" Header="Időpont" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
 
     </Grid>
