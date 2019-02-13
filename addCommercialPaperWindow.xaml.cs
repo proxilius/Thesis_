@@ -32,7 +32,7 @@ namespace SimaSzamlaAdatbazissal
             CommercialPapers cp = new CommercialPapers();
             try
             {
-                cp.cp_name = tbName.Text;
+                cp.cp_name = comboBox.Text.ToString();
                 cp.cp_date = tbDate.Text;
                 cp.cp_time = TimeSpan.Parse(tbTime.Text);
                 cp.cp_value = Convert.ToInt32(tbValue.Text);
@@ -58,6 +58,16 @@ namespace SimaSzamlaAdatbazissal
             {
                 MessageBox.Show("Hibásan adtad meg valamely paramétert");
             }
+        }
+
+        private void setDateNow(object sender, RoutedEventArgs e)
+        {
+            tbDate.Text = DateTime.Today.ToString("yyyy.MM.dd");
+        }
+
+        private void setTimeNow(object sender, RoutedEventArgs e)
+        {
+             tbTime.Text=DateTime.Now.ToString("HH:mm:ss");
         }
     }
 }

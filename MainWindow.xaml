@@ -106,7 +106,12 @@
                         </Grid.ColumnDefinitions>
                         <Button Content="Új értékpapír vásárlás" Margin="0,-129,-3,254" Click="addCommercialPaper" Grid.ColumnSpan="2"></Button>
                         <TextBox x:Name="amountBox" Margin="0,-31,6,167"/>
-                        <TextBox x:Name="fifoname" Margin="0,10,6,126"/>
+                        <ComboBox x:Name="fifoname" Margin="0,10,6,126">
+                            <ComboBoxItem IsSelected="True">OTP</ComboBoxItem>
+                            <ComboBoxItem >MOL</ComboBoxItem>
+                            <ComboBoxItem>SHELL</ComboBoxItem>
+                            <ComboBoxItem>ERSTE</ComboBoxItem>
+                        </ComboBox>
                         <TextBox x:Name="fifoamount" Margin="0,40,6,96"/>
                         <Button Content="FIFO eladás" Margin="3,72,-3,53"  Grid.ColumnSpan="2" Click="sellFifo"></Button>
                         <Label x:Name="labeldarab" Content="Darabszám" Margin="10,-31,28,167" Grid.Column="1"/>
