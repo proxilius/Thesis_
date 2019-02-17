@@ -44,7 +44,7 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="ID"/>
                                 <DataGridTextColumn Binding="{Binding Megnevezes}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Név"/>
-                                <DataGridTextColumn Binding="{Binding Osszeg}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Összeg" FontWeight="Bold">
+                                <DataGridTextColumn Binding="{Binding Osszeg, StringFormat=\{0:N0\}}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Összeg" FontWeight="Bold">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style>
                                             <Setter Property="TextBlock.TextAlignment" Value="Right" />
@@ -59,7 +59,7 @@
                         </DataGrid>
                         <DataGrid Grid.Column="4" x:Name="ReszosszegDatagrid" HorizontalAlignment="Left" AutoGenerateColumns="False" Margin="5,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.667,1.231" Grid.ColumnSpan="1" Width="78" >
                             <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding sub}"  ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Részösszeg"/>
+                                <DataGridTextColumn Binding="{Binding sub , StringFormat=\{0:N0\}}"  ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Részösszeg"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Grid.Column="5">
@@ -91,9 +91,9 @@
                                 <DataGridTextColumn Binding="{Binding cp_name}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="1.2*" Header="Értékpapír neve"/>
                                 <DataGridTextColumn Binding="{Binding cp_date}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Vásárlás dátuma" FrameworkElement.FlowDirection="RightToLeft"/>
                                 <DataGridTextColumn Binding="{Binding cp_time}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Időpontja"/>
-                                <DataGridTextColumn Binding="{Binding cp_value}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="2*" Header="Vásárlás dátumán összeg"/>
+                                <DataGridTextColumn Binding="{Binding cp_value, StringFormat=\{0:N0\}}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="2*" Header="Vásárlás dátumán összeg"/>
                                 <DataGridTextColumn Binding="{Binding cp_amount}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Darabszám"/>
-                                <DataGridTextColumn Binding="{Binding sumcom}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Összesen"/>
+                                <DataGridTextColumn Binding="{Binding sumcom, StringFormat=\{0:N0\}}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Összesen"/>
 
                             </DataGrid.Columns>
 
