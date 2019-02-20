@@ -26,8 +26,18 @@ namespace SimaSzamlaAdatbazissal
         {
             InitializeComponent();
             dataGridRate.ItemsSource = DB.RateTable.ToList();
+            CenterWindowOnScreen();
             
 
+        }
+        private void CenterWindowOnScreen()
+        {
+            double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+            double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+            double windowWidth = this.Width;
+            double windowHeight = this.Height;
+            this.Left = (screenWidth / 2) - (windowWidth / 2);
+            this.Top = (screenHeight / 2) - (windowHeight / 2);
         }
 
         private void putPriceToDatabase(object sender, RoutedEventArgs e)
@@ -83,6 +93,25 @@ namespace SimaSzamlaAdatbazissal
             MessageBox.Show(s+"\n"+ss);
             RateDiagramWindow rd = new RateDiagramWindow();
             rd.Show();
+        }
+
+        private void deletePrice(object sender, RoutedEventArgs e)
+        {
+            int id = 0;
+            try
+            {
+                id = (dataGridRate.SelectedItem as RateTable).Id;
+                RateTable torlendo = new RateTable();
+                torlendo = DB.RateTable.Where(d => d.Id == id).First();
+                DB.RateTable.Remove(torlendo);
+                DB.SaveChanges();
+                dataGridRate.ItemsSource = DB.RateTable.ToList();
+                
+            }
+            catch
+            {
+                MessageBox.Show("Hiba, jelölje ki a torolni kivánt sort.");
+            }
         }
     }
 }

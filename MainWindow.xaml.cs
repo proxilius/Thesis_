@@ -269,7 +269,7 @@ namespace SimaSzamlaAdatbazissal
                         CommercialPapersDataGrid.ItemsSource = b;
                         
                     }
-                    MessageBox.Show("A nyereseg: "+winning+"\n Az értékpapír árfolyama: "+actualPriceOfPaper);
+                    MessageBox.Show("A nyereseg: "+winning+"\n"+"Az adózás után: "+winning*0.85+"\nAz értékpapír árfolyama: "+actualPriceOfPaper);
                 }   
                 else
                 {
@@ -286,7 +286,9 @@ namespace SimaSzamlaAdatbazissal
 
         private void sellFifo(object sender, RoutedEventArgs e)
         {
-            string name = fifoname.Text;
+            int actualPriceOfPaper = 0;
+            int winningFifo = 0;
+            string name = fifoname.Text.ToString();
             int amount = Convert.ToInt32(fifoamount.Text);//ennyit akarunk eladni
             int actualPaperAmount = 0;
             List<CommercialPapers> cplist = new List<CommercialPapers>();
@@ -301,18 +303,27 @@ namespace SimaSzamlaAdatbazissal
             }
             if (actualPaperAmount >= amount)
             {
+                foreach (var i in DB.RateTable.ToList())
+                {
+                    if (i.NameOfpaper.Contains(name))
+                    {
+                        actualPriceOfPaper = i.Price;//set actual price
+                    }
+                }
                 MessageBox.Show("Név\n" + nevek + "\n" + actualPaperAmount);
                 foreach (var i in sortedcplist)
                 {
                     int actualdb = i.cp_amount - amount;//10-15
                     if (actualdb <= 0)
                     {
+                        winningFifo = (actualPriceOfPaper * i.cp_amount) - (i.cp_amount*i.cp_value);
                         DB.CommercialPapers.Remove(i);
                         DB.SaveChanges();
                         amount = amount - i.cp_amount;
                     }
                     else
                     {
+                        winningFifo += (actualPriceOfPaper * amount) - (amount*i.cp_value);
                         i.cp_amount = i.cp_amount - amount;
                         DB.SaveChanges();
                         List<CommercialPapers> b = DB.CommercialPapers.ToList();
@@ -324,6 +335,7 @@ namespace SimaSzamlaAdatbazissal
                         break;
                     }
                 }
+                MessageBox.Show("Árfolyam: "+actualPriceOfPaper+"\nNyereseg: "+winningFifo+"\n neve: "+name);
             }
             else
             {
