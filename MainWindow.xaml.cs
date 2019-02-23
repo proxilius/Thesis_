@@ -62,6 +62,8 @@ namespace SimaSzamlaAdatbazissal
             ReszosszegDatagrid.ItemsSource = SubtotalsList;
         }
 
+        
+
         public MainWindow()
         {
 
@@ -80,6 +82,7 @@ namespace SimaSzamlaAdatbazissal
                 i.sumcom = i.cp_value * i.cp_amount;
             }
             CommercialPapersDataGrid.ItemsSource = b;//DB.CommercialPapers.ToList();
+            dataGridCommercialsells.ItemsSource = DB.CommercialPaperSells.ToList();
             makeSubtotal(a);
             dgrid = SzamlaDatagrid;
             szamol2();
@@ -231,6 +234,7 @@ namespace SimaSzamlaAdatbazissal
             {
                 id = (CommercialPapersDataGrid.SelectedItem as CommercialPapers).cp_id;
                 CommercialPapers selling = new CommercialPapers();
+                CommercialPaperSells selled = new CommercialPaperSells();
                 selling = DB.CommercialPapers.Where(d => d.cp_id == id).First();
                 int cpamount = selling.cp_amount;
                 if (cpamount - Convert.ToInt32(amountBox.Text) >= 0)
@@ -243,12 +247,24 @@ namespace SimaSzamlaAdatbazissal
                         }
                     }
 
+                    selled.cpAmount = Convert.ToInt32(amountBox.Text);
+                    selled.cpDate = "2";// DateTime.Today.ToString();
+                    selled.cpTime = "2";//DateTime.Now.ToString();
+                    selled.cpName = selling.cp_name;
+                    selled.cpValue = actualPriceOfPaper;
+                    selled.cpSumcom = actualPriceOfPaper * Convert.ToInt32(amountBox.Text);
+                    MessageBox.Show(selled.cpName+", "+selled.cpAmount+","+selled.cpValue);
+                    DB.CommercialPaperSells.Add(selled);
+                    DB.SaveChanges();
+                    dataGridCommercialsells.ItemsSource = DB.CommercialPaperSells.ToList();
+
                     selling.cp_amount = selling.cp_amount - Convert.ToInt32(amountBox.Text);
                     winning = (actualPriceOfPaper * Convert.ToInt32(amountBox.Text)) - (Convert.ToInt32(amountBox.Text) * selling.cp_value);
                     if (selling.cp_amount == 0)
                     {
                         
                         DB.CommercialPapers.Remove(selling);
+                       
                         DB.SaveChanges();
                         List<CommercialPapers> b = DB.CommercialPapers.ToList();
                         foreach (var i in b)
@@ -256,6 +272,7 @@ namespace SimaSzamlaAdatbazissal
                             i.sumcom = i.cp_value * i.cp_amount;
                         }
                         CommercialPapersDataGrid.ItemsSource = b;
+                       
 
                     }
                     if (selling.cp_amount > 0)
@@ -268,8 +285,11 @@ namespace SimaSzamlaAdatbazissal
                         }
                         CommercialPapersDataGrid.ItemsSource = b;
                         
+
                     }
+                    
                     MessageBox.Show("A nyereseg: "+winning+"\n"+"Az adózás után: "+winning*0.85+"\nAz értékpapír árfolyama: "+actualPriceOfPaper);
+                    
                 }   
                 else
                 {
@@ -278,9 +298,10 @@ namespace SimaSzamlaAdatbazissal
                 
 
             }
-            catch
+            catch(Exception ed)
             {
                 MessageBox.Show("Hiba, jelölje ki az eladni kivánt értékpapírt.");
+                MessageBox.Show(ed.ToString());
             }
         }
 
@@ -345,6 +366,60 @@ namespace SimaSzamlaAdatbazissal
 
            
              
+
+        }
+
+        private void getActualAmount(object sender, RoutedEventArgs e)
+        {
+            List<CommercialPapers> cplist = new List<CommercialPapers>();
+            List<string> cpNames = new List<string>();
+            List<string> cpNamesDistinct = new List<string>();
+            string mai = "";
+            mai = datum.Text;
+            
+
+            Dictionary<string, int> my = new Dictionary<string, int>();
+
+            string names="";
+            cplist = DB.CommercialPapers.ToList();
+            foreach (var i in cplist)
+            {
+                cpNames.Add(i.cp_name);
+            }
+
+            cpNamesDistinct = cpNames.Distinct().ToList();
+            foreach (var i in cpNamesDistinct)
+            {
+                my.Add(i,0);
+            }
+            
+            foreach(var i in cplist)
+            {
+                if(DateTime.Parse(i.cp_date) <DateTime.Parse(mai))
+                my[i.cp_name] += i.cp_amount;
+            }
+            
+            foreach (var i in my)
+            {
+                names += i.Key + ": " + i.Value + "\n";
+            }
+            
+            MessageBox.Show(names+"\n"+mai);
+            var all = from c in DB.ActualDBTable select c;
+            DB.ActualDBTable.RemoveRange(all);
+            foreach (var i in my)
+            {
+
+                ActualDBTable actualdb = new ActualDBTable();
+                actualdb.cpName = i.Key;
+                actualdb.cpDB = i.Value;
+                actualdb.cpFulValue = 50;
+                DB.ActualDBTable.Add(actualdb);
+                DB.SaveChanges();
+                
+            }
+
+            dataGridActualAmounts.ItemsSource = DB.ActualDBTable.ToList();
 
         }
     }

@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="SzamlaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ActualDBTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cpName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="cpDB" Type="int" Nullable="false" />
+          <Property Name="cpFulValue" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="CommercialPapers">
           <Key>
             <PropertyRef Name="cp_id" />
@@ -15,6 +24,18 @@
           <Property Name="cp_time" Type="time" Precision="7" Nullable="false" />
           <Property Name="cp_value" Type="int" Nullable="false" />
           <Property Name="cp_amount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CommercialPaperSells">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cpName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="cpDate" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="cpTime" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="cpValue" Type="int" Nullable="false" />
+          <Property Name="cpAmount" Type="int" Nullable="false" />
+          <Property Name="cpSumcom" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="RateTable">
           <Key>
@@ -36,7 +57,9 @@
           <Property Name="Datum" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityContainer Name="SzamlaModelStoreContainer">
+          <EntitySet Name="ActualDBTable" EntityType="Self.ActualDBTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CommercialPapers" EntityType="Self.CommercialPapers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CommercialPaperSells" EntityType="Self.CommercialPaperSells" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RateTable" EntityType="Self.RateTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Szamlak" EntityType="Self.Szamlak" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -57,6 +80,8 @@
           <EntitySet Name="Szamlak" EntityType="Self.Szamlak" />
           <EntitySet Name="CommercialPapers" EntityType="SzamlaModel.CommercialPapers" />
           <EntitySet Name="RateTable" EntityType="SzamlaModel.RateTable" />
+          <EntitySet Name="CommercialPaperSells" EntityType="SzamlaModel.CommercialPaperSells" />
+          <EntitySet Name="ActualDBTable" EntityType="SzamlaModel.ActualDBTable" />
         </EntityContainer>
         <EntityType Name="CommercialPapers">
           <Key>
@@ -78,6 +103,27 @@
           <Property Name="Price" Type="Int32" Nullable="false" />
           <Property Name="DateOf" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TimeOf" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CommercialPaperSells">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="cpName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cpDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cpTime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cpValue" Type="Int32" Nullable="false" />
+          <Property Name="cpAmount" Type="Int32" Nullable="false" />
+          <Property Name="cpSumcom" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ActualDBTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cpName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cpDB" Type="Int32" Nullable="false" />
+          <Property Name="cpFulValue" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -114,6 +160,29 @@
                 <ScalarProperty Name="DateOf" ColumnName="DateOf" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="NameOfpaper" ColumnName="NameOfpaper" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CommercialPaperSells">
+            <EntityTypeMapping TypeName="SzamlaModel.CommercialPaperSells">
+              <MappingFragment StoreEntitySet="CommercialPaperSells">
+                <ScalarProperty Name="cpSumcom" ColumnName="cpSumcom" />
+                <ScalarProperty Name="cpAmount" ColumnName="cpAmount" />
+                <ScalarProperty Name="cpValue" ColumnName="cpValue" />
+                <ScalarProperty Name="cpTime" ColumnName="cpTime" />
+                <ScalarProperty Name="cpDate" ColumnName="cpDate" />
+                <ScalarProperty Name="cpName" ColumnName="cpName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ActualDBTable">
+            <EntityTypeMapping TypeName="SzamlaModel.ActualDBTable">
+              <MappingFragment StoreEntitySet="ActualDBTable">
+                <ScalarProperty Name="cpFulValue" ColumnName="cpFulValue" />
+                <ScalarProperty Name="cpDB" ColumnName="cpDB" />
+                <ScalarProperty Name="cpName" ColumnName="cpName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

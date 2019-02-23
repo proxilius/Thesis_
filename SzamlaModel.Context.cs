@@ -28,5 +28,7 @@ namespace SimaSzamlaAdatbazissal
         public virtual DbSet<Szamlak> Szamlak { get; set; }
         public virtual DbSet<CommercialPapers> CommercialPapers { get; set; }
         public virtual DbSet<RateTable> RateTable { get; set; }
+        public virtual DbSet<CommercialPaperSells> CommercialPaperSells { get; set; }
+        public virtual DbSet<ActualDBTable> ActualDBTable { get; set; }
     }
 }

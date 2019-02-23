@@ -13,7 +13,6 @@
         <Label x:Name="label1_Copy1" Content="Vásárlás időpontja" HorizontalAlignment="Left" Margin="10,127,0,0" VerticalAlignment="Top" Width="132"/>
         <Label x:Name="label1_Copy2" Content="Értéke" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top" Width="132"/>
         <Label x:Name="label1_Copy3" Content="Darabszám" HorizontalAlignment="Left" Margin="10,189,0,0" VerticalAlignment="Top" Width="132"/>
-        <TextBox x:Name="tbDate" HorizontalAlignment="Left" Margin="156,101,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="21"/>
         <TextBox x:Name="tbTime" HorizontalAlignment="Left" Margin="156,132,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Height="21"/>
         <TextBox x:Name="tbValue" HorizontalAlignment="Left" Margin="156,163,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" Height="21"/>
         <TextBox x:Name="tbAmount" HorizontalAlignment="Left" Margin="156,194,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="216" Height="21"/>
@@ -24,8 +23,8 @@
             <ComboBoxItem>SHELL</ComboBoxItem>
             <ComboBoxItem>ERSTE</ComboBoxItem>
         </ComboBox>
-        <Button x:Name="button" Content="Mai dátum" HorizontalAlignment="Left" Margin="297,101,0,0" VerticalAlignment="Top" Width="75" Click="setDateNow"/>
         <Button x:Name="button1" Content="Jelenlegi idő" HorizontalAlignment="Left" Margin="297,133,0,0" VerticalAlignment="Top" Width="75" Click="setTimeNow"/>
+        <DatePicker Name="tbDate" HorizontalAlignment="Left" Margin="156,101,0,0" VerticalAlignment="Top" Width="120"/>
 
 
     </Grid>

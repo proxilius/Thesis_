@@ -128,6 +128,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ActualDBTable.cs">
+      <DependentUpon>SzamlaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="addCommercialPaperWindow.xaml.cs">
       <DependentUpon>addCommercialPaperWindow.xaml</DependentUpon>
     </Compile>
@@ -137,6 +140,9 @@
     <Compile Include="CommercialPapers.cs">
       <DependentUpon>SzamlaModel.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="CommercialPaperSells.cs">
+      <DependentUpon>SzamlaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="FirstWindow.xaml.cs">
       <DependentUpon>FirstWindow.xaml</DependentUpon>
