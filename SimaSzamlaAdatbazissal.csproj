@@ -131,11 +131,17 @@
     <Compile Include="ActualDBTable.cs">
       <DependentUpon>SzamlaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ActualTable.cs">
+      <DependentUpon>SzamlaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="addCommercialPaperWindow.xaml.cs">
       <DependentUpon>addCommercialPaperWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="addItemWindow.xaml.cs">
       <DependentUpon>addItemWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CommercialPaperFix.cs">
+      <DependentUpon>SzamlaModel.tt</DependentUpon>
     </Compile>
     <Compile Include="CommercialPapers.cs">
       <DependentUpon>SzamlaModel.tt</DependentUpon>

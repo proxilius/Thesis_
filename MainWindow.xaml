@@ -107,7 +107,7 @@
                         </Label>
                     </Grid>
                     <Grid Grid.Row="1" Margin="0,0,10,0">
-                        <DataGrid Margin="0,-276,285,339" x:Name="CommercialPapersDataGrid" AutoGenerateColumns="False" >
+                        <DataGrid Margin="638,54,-353,9" x:Name="CommercialPapersDataGrid" AutoGenerateColumns="False" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding cp_id}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="0.5*" Header="ID"/>
                                 <DataGridTextColumn Binding="{Binding cp_name}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="1.2*" Header="Értékpapír neve"/>
@@ -154,7 +154,7 @@
                     </Grid>
                     <Button Content="Kiválasztott &#xA;értékpapír eladás" Margin="596,142,136,158" Click="sellCommercialPaper" RenderTransformOrigin="0.278,0.48"/>
 
-                    <DataGrid x:Name="dataGridActualAmounts" Height="100" Grid.Column="1" Margin="0,96,214,154" AutoGenerateColumns="False">
+                    <DataGrid x:Name="dataGridActualAmounts" Height="100" Margin="848,70,249,180" AutoGenerateColumns="False" Grid.ColumnSpan="2">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding cpName}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Neve"/>
                             <DataGridTextColumn Binding="{Binding cpDB}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Darabszám"/>
@@ -162,12 +162,25 @@
                         </DataGrid.Columns>
 
                     </DataGrid>
-                    <Button x:Name="buttonToGetActualAmounts" Content="Frissit" Grid.Column="1" HorizontalAlignment="Left" Margin="248,149,0,0" VerticalAlignment="Top" Width="75" Click="getActualAmount"/>
-                    <Label x:Name="label2" Content="Adja meg a dátumot" Grid.Column="1" HorizontalAlignment="Left" Margin="243,88,0,0" VerticalAlignment="Top" Width="143" FontWeight="Bold" FontSize="13"/>
-                    <local:ViewModelUserControl Grid.Column="1" HorizontalAlignment="Left" Height="100" Margin="264,135,0,0" VerticalAlignment="Top" Width="100"/>
-                    <DatePicker x:Name="datum" Grid.Column="1" HorizontalAlignment="Left" Margin="248,114,0,0" VerticalAlignment="Top" Height="29" Width="116"/>
+                    <Button x:Name="buttonToGetActualAmounts" Content="Frissit" Grid.Column="1" HorizontalAlignment="Left" Margin="232,105,0,0" VerticalAlignment="Top" Width="75" Click="getActualAmount"/>
+                    <Label x:Name="label2" Content="Adja meg a dátumot" Grid.Column="1" HorizontalAlignment="Left" Margin="227,45,0,0" VerticalAlignment="Top" Width="143" FontWeight="Bold" FontSize="13"/>
+                    <local:ViewModelUserControl Grid.Column="1" HorizontalAlignment="Left" Height="42" Margin="195,208,0,0" VerticalAlignment="Top" Width="100"/>
+                    <DatePicker x:Name="datum" Grid.Column="1" HorizontalAlignment="Left" Margin="232,71,0,0" VerticalAlignment="Top" Height="29" Width="116"/>
                     <Label x:Name="label8" Content="Eladások" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,20,0,0" Grid.Row="1" FontWeight="Bold" FontSize="16"/>
                     <Label x:Name="label9" Content="Aktuális darabszám táblázat" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="5,42,0,0" FontSize="16" FontWeight="Bold"/>
+                    <DataGrid x:Name="dataGridCommercialFix" HorizontalAlignment="Left" VerticalAlignment="Top" Height="260" Width="536" Margin="18,70,0,0" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="0.5*" Header="ID"/>
+                            <DataGridTextColumn Binding="{Binding cp_name}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="1.2*" Header="Értékpapír neve"/>
+                            <DataGridTextColumn Binding="{Binding cp_date}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Eladás dátuma" FrameworkElement.FlowDirection="RightToLeft"/>
+                            <DataGridTextColumn Binding="{Binding cp_time}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Időpontja"/>
+                            <DataGridTextColumn Binding="{Binding cp_value, StringFormat=\{0:N0\}}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Értéke"/>
+                            <DataGridTextColumn Binding="{Binding cp_amount}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Darabszám"/>
+                            <DataGridTextColumn Binding="{Binding sumcom, StringFormat=\{0:N0\}}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Összesen"/>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DataGrid x:Name="dataGridActual" HorizontalAlignment="Left" VerticalAlignment="Top" Height="125" Width="405" Grid.ColumnSpan="2" Margin="848,205,0,0"/>
                 </Grid>
 
             </TabItem>

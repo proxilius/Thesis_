@@ -30,5 +30,7 @@ namespace SimaSzamlaAdatbazissal
         public virtual DbSet<RateTable> RateTable { get; set; }
         public virtual DbSet<CommercialPaperSells> CommercialPaperSells { get; set; }
         public virtual DbSet<ActualDBTable> ActualDBTable { get; set; }
+        public virtual DbSet<CommercialPaperFix> CommercialPaperFix { get; set; }
+        public virtual DbSet<ActualTable> ActualTable { get; set; }
     }
 }

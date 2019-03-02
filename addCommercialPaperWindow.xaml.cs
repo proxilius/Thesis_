@@ -28,25 +28,64 @@ namespace SimaSzamlaAdatbazissal
 
         private void addCommercialToDatabase(object sender, RoutedEventArgs e)
         {
+            int firstvalueforactual = 0;//amikor meg nincs ertekpapir 
+            int actualPriceOfPaper = 0;
             SzamlaEntities uj = new SzamlaEntities();
             CommercialPapers cp = new CommercialPapers();
+            CommercialPaperFix cpfix = new CommercialPaperFix();
+            ActualTable actualdbs = new ActualTable();
             try
             {
+                foreach (var i in uj.RateTable.ToList())
+                {
+                    if (i.NameOfpaper.Contains(comboBox.Text.ToString()))
+                    {
+                        actualPriceOfPaper = i.Price;
+                    }
+                }
+                foreach(var i in uj.ActualTable)
+                {
+                    if(i.Name.Contains(comboBox.Text.ToString()))
+                    firstvalueforactual = i.AmountAfterChange;
+                }
+
+
                 cp.cp_name = comboBox.Text.ToString();
                 cp.cp_date = tbDate.Text;
-                cp.cp_time = TimeSpan.Parse(tbTime.Text);
+                cp.cp_time =TimeSpan.Parse( tbTime.Text);
                 cp.cp_value = Convert.ToInt32(tbValue.Text);
                 cp.cp_amount= Convert.ToInt32(tbAmount.Text);
                 uj.CommercialPapers.Add(cp);
                 uj.SaveChanges();
 
+                cpfix.cp_name = comboBox.Text.ToString();
+                cpfix.cp_date = tbDate.Text;
+                cpfix.cp_time =tbTime.Text;
+                cpfix.cp_value = Convert.ToInt32(tbValue.Text);
+                cpfix.cp_amount = Convert.ToInt32(tbAmount.Text);
+                uj.CommercialPaperFix.Add(cpfix);
+                uj.SaveChanges();
+
+                actualdbs.Name= comboBox.Text.ToString();
+                actualdbs.DateOf= tbDate.Text;
+                actualdbs.TimeOf= tbTime.Text;
+                actualdbs.Change= Convert.ToInt32(tbAmount.Text);
+                actualdbs.actualRate = actualPriceOfPaper;
+                actualdbs.AmountAfterChange = Convert.ToInt32(tbAmount.Text) + firstvalueforactual;
+                actualdbs.Sum = actualdbs.actualRate * actualdbs.AmountAfterChange;
+                uj.ActualTable.Add(actualdbs);
+                uj.SaveChanges();
+
+
                 m.SzamlaDatagrid.ItemsSource = uj.Szamlak.ToList();
-                List<CommercialPapers> b = uj.CommercialPapers.ToList();
+                List<CommercialPaperFix> b = uj.CommercialPaperFix.ToList();
                 foreach (var i in b)
                 {
                     i.sumcom = i.cp_value * i.cp_amount;
                 }
-                m.CommercialPapersDataGrid.ItemsSource = b;
+                m.dataGridCommercialFix.ItemsSource = b;
+                m.CommercialPapersDataGrid.ItemsSource = uj.CommercialPapers.ToList();
+                m.dataGridActual.ItemsSource = uj.ActualTable.ToList();
                 
                
 

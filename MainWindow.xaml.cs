@@ -117,14 +117,16 @@ namespace SimaSzamlaAdatbazissal
                 OC.Add(i);
             }
             SzamlaDatagrid.ItemsSource = DB.Szamlak.ToList();
-            List<CommercialPapers> b = DB.CommercialPapers.ToList();
+            List<CommercialPaperFix> b = DB.CommercialPaperFix.ToList();
             foreach (var i in b)
             {
                 i.sumcom = i.cp_value * i.cp_amount;
             }
-            CommercialPapersDataGrid.ItemsSource = b;//DB.CommercialPapers.ToList();
+            dataGridCommercialFix.ItemsSource = b;//DB.CommercialPapers.ToList();
             dataGridCommercialsells.ItemsSource = DB.CommercialPaperSells.ToList();
             dataGridRate.ItemsSource = DB.RateTable.ToList();
+            CommercialPapersDataGrid.ItemsSource = DB.CommercialPapers.ToList();
+            dataGridActual.ItemsSource=DB.ActualTable.ToList();
             makeSubtotal(a);
             dgrid = SzamlaDatagrid;
             szamol2();
@@ -329,7 +331,24 @@ namespace SimaSzamlaAdatbazissal
                         
 
                     }
-                    
+                    ActualTable actualdbs = new ActualTable();
+                    int firstvalueforactual = 0;//amikor meg nincs ertekpapir 
+                    foreach (var i in DB.ActualTable)
+                    {
+                        if (i.Name.Contains(selling.cp_name))
+                            firstvalueforactual = i.AmountAfterChange;
+                    }
+                    actualdbs.Name = selling.cp_name;
+                    actualdbs.DateOf = DateTime.Today.ToString("yyyy.MM.dd");
+                    actualdbs.TimeOf = DateTime.Now.ToString("HH:mm:ss");
+                    actualdbs.Change = 0-Convert.ToInt32(amountBox.Text);
+                    actualdbs.actualRate = actualPriceOfPaper;
+                    actualdbs.AmountAfterChange = firstvalueforactual- Convert.ToInt32(amountBox.Text);
+                    actualdbs.Sum = actualdbs.actualRate * actualdbs.AmountAfterChange;
+                    DB.ActualTable.Add(actualdbs);
+                    DB.SaveChanges();
+                    dataGridActual.ItemsSource = DB.ActualTable.ToList();
+
                     MessageBox.Show("A nyereseg: "+winning+"\n"+"Az adózás után: "+winning*0.85+"\nAz értékpapír árfolyama: "+actualPriceOfPaper);
                     
                 }   
@@ -539,7 +558,7 @@ namespace SimaSzamlaAdatbazissal
             List<CommercialPapers> sortedcplist = new List<CommercialPapers>();
             cplist = DB.CommercialPapers.Where(d => d.cp_name == name).ToList();
             string nevek = "";
-            sortedcplist = cplist.OrderBy(d => d.cp_date).ThenBy(d => d.cp_time).ToList();
+            sortedcplist = cplist.OrderBy(d => d.cp_date).ThenBy(d => d.cp_time.ToString()).ToList();
             sortedcplist.Reverse();
             foreach (var i in sortedcplist)
             {
