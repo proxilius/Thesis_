@@ -18,5 +18,6 @@ namespace SimaSzamlaAdatbazissal
         public string cpName { get; set; }
         public int cpDB { get; set; }
         public int cpFulValue { get; set; }
+        public string cpDate { get; set; }
     }
 }

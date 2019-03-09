@@ -107,7 +107,7 @@
                         </Label>
                     </Grid>
                     <Grid Grid.Row="1" Margin="0,0,10,0">
-                        <DataGrid Margin="638,54,-353,9" x:Name="CommercialPapersDataGrid" AutoGenerateColumns="False" >
+                        <DataGrid Margin="638,54,-353,26" x:Name="CommercialPapersDataGrid" AutoGenerateColumns="False" >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding cp_id}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="0.5*" Header="ID"/>
                                 <DataGridTextColumn Binding="{Binding cp_name}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="1.2*" Header="Értékpapír neve"/>
@@ -129,6 +129,7 @@
                                 <DataGridTextColumn Binding="{Binding cpValue, StringFormat=\{0:N0\}}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Értéke"/>
                                 <DataGridTextColumn Binding="{Binding cpAmount}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Darabszám"/>
                                 <DataGridTextColumn Binding="{Binding cpSumcom, StringFormat=\{0:N0\}}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Összesen"/>
+                                <DataGridTextColumn Binding="{Binding cpWinning, StringFormat=\{0:N0\}}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Hozam"/>
 
                             </DataGrid.Columns>
                         </DataGrid>
@@ -154,11 +155,13 @@
                     </Grid>
                     <Button Content="Kiválasztott &#xA;értékpapír eladás" Margin="596,142,136,158" Click="sellCommercialPaper" RenderTransformOrigin="0.278,0.48"/>
 
-                    <DataGrid x:Name="dataGridActualAmounts" Height="100" Margin="848,70,249,180" AutoGenerateColumns="False" Grid.ColumnSpan="2">
+                    <DataGrid x:Name="dataGridActualAmounts" Height="100" Margin="782,70,220,180" AutoGenerateColumns="False" Grid.ColumnSpan="2">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding cpName}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Neve"/>
+                            <DataGridTextColumn Binding="{Binding cpDate}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="2*" Header="Dátum"/>
                             <DataGridTextColumn Binding="{Binding cpDB}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Darabszám"/>
                             <DataGridTextColumn Binding="{Binding cpFulValue}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Összérték"/>
+
                         </DataGrid.Columns>
 
                     </DataGrid>
@@ -180,25 +183,32 @@
 
                         </DataGrid.Columns>
                     </DataGrid>
-                    <DataGrid x:Name="dataGridActual" HorizontalAlignment="Left" VerticalAlignment="Top" Height="125" Width="405" Grid.ColumnSpan="2" Margin="848,205,0,0"/>
+                    <DataGrid x:Name="dataGridActual" HorizontalAlignment="Left" VerticalAlignment="Top" Height="186" Width="507" Grid.ColumnSpan="2" Margin="782,205,0,0" AutoGenerateColumns="False" Grid.RowSpan="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="0.5*" Header="ID"/>
+                            <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="1.2*" Header="Név"/>
+                            <DataGridTextColumn Binding="{Binding DateOf}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Dátum" FrameworkElement.FlowDirection="RightToLeft"/>
+                            <DataGridTextColumn Binding="{Binding TimeOf}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Időpont"/>
+                            <DataGridTextColumn Binding="{Binding Change}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Változás"/>
+                            <DataGridTextColumn Binding="{Binding AmountAfterChange, StringFormat=\{0:N0\}}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Változás utáni érték"/>
+                            <DataGridTextColumn Binding="{Binding Sum, StringFormat=\{0:N0\}}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Öszesen"/>
+                            <DataGridTextColumn Binding="{Binding actualRate, StringFormat=\{0:N0\}}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Árfolyam"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Label x:Name="label9_Copy" Content="Aktuális darabszám táblázat lebontva" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="782,170,0,0" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="2"/>
+                    <Label x:Name="label8_Copy" Content="Aktuális batch" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="596,29,0,0" Grid.Row="1" FontWeight="Bold" FontSize="16"/>
                 </Grid>
 
             </TabItem>
-            <TabItem Header="Grafikon">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <Button x:Name="button2" Content="Line chart" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="87" Click="GraphWindow"/>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                        <Button x:Name="button3" Content="Pie chart" HorizontalAlignment="Left" Margin="127,10,0,0" VerticalAlignment="Top" Width="87" Click="PieChartWindow"/>
-
-                    </Grid>
+            <TabItem Header="Havi kimutatás">
+                <Grid HorizontalAlignment="Left" Height="709" VerticalAlignment="Top" Width="1329">
+                    <DatePicker Name="BeginDate" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,26,0,0"/>
+                    <DatePicker Name="EndDate" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="160,26,0,0"/>
+                    <Label x:Name="label11" Content="Kezdő dátum" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0"/>
+                    <Label x:Name="label12" Content="Végső dátum" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="160,0,0,0"/>
+                    <DataGrid x:Name="dataGridFilterByDate" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,71,0,0" Width="453" Height="220"/>
+                    <Button x:Name="button2" Content="Listáz" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="388,30,0,0" Click="ListPapersByDate"/>
                 </Grid>
-
             </TabItem>
             <TabItem Header="Árfolyam">
                 <Grid HorizontalAlignment="Left" Height="547" VerticalAlignment="Top" Width="1328">
@@ -229,37 +239,72 @@
                                                 IndependentValuePath="Key"
                                                 ItemsSource="{Binding [0]}"
                                                 IsSelectionEnabled="True"/>
-                        <chartingToolkit:LineSeries Name="KWP" 
+                        <chartingToolkit:LineSeries Name="Mol"
                                                 Title="MOL"  
                                                 DependentValuePath="Value" 
                                                 IndependentValuePath="Key"
                                                 ItemsSource="{Binding [1]}"
-                                                IsSelectionEnabled="True"  />
-                        <chartingToolkit:LineSeries Name="erste" 
-                                                Title="ERSTE"  
+                                                IsSelectionEnabled="True"/>
+                        <chartingToolkit:LineSeries Name="Erste"
+                                                Title="Kiválasztott"  
                                                 DependentValuePath="Value" 
                                                 IndependentValuePath="Key"
                                                 ItemsSource="{Binding [2]}"
-                                                IsSelectionEnabled="True"  />
+                                                IsSelectionEnabled="True"/>
+
                     </chartingToolkit:Chart>
                     <Button x:Name="buttonDeletePrice" Content="Töröl" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="89,202,0,0" Click="deletePrice"/>
                     <Label x:Name="label10" Content="Árfolyam táblázat" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="325,11,0,0" FontWeight="Bold" FontSize="14"/>
+                    <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="183,202,0,0">
+                        <ComboBoxItem IsSelected="True">OTP</ComboBoxItem>
+                        <ComboBoxItem >MOL</ComboBoxItem>
+                        <ComboBoxItem>SHELL</ComboBoxItem>
+                        <ComboBoxItem>ERSTE</ComboBoxItem>
+                    </ComboBox>
+                    <Button x:Name="buttonmakediagram" Content="Frissít" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="325,202,0,0" Click="makeDiagram"/>
+                    <chartingToolkit:Chart x:Name="lineChartCopy"
+                        Title="Árfolyam grafikon" 
+                        VerticalAlignment="Top" 
+                        Margin="10,242,10,-128" 
+                        Height="433" d:IsHidden="True">
+                        <chartingToolkit:LineSeries x:Name="Kivalasztottak"
+                            Title="Kiválasztott"  
+                            DependentValuePath="Value" 
+                            IndependentValuePath="Key"
+                            ItemsSource="{Binding [0]}"
+                            IsSelectionEnabled="True"/>
+                    </chartingToolkit:Chart>
 
                 </Grid>
 
 
 
             </TabItem>
+            <TabItem Header="Részvény grafikon">
+                <Grid HorizontalAlignment="Left" Height="695" VerticalAlignment="Top" Width="1318">
+                    <chartingToolkit:Chart Name="lineChartForPaperDB"
+                                       Title="Részvény darabszám grafikon" 
+                                       VerticalAlignment="Top" 
+                                       Margin="0,68,20,0" 
+                                       Height="375">
+                        <chartingToolkit:LineSeries Name="KWGs"
+                                                Title="OTP"  
+                                                DependentValuePath="Value" 
+                                                IndependentValuePath="Key"
+                                                ItemsSource="{Binding [0]}"
+                                                IsSelectionEnabled="True"/>
+                        
 
-
-
-
-
-
-
-
-
-
+                    </chartingToolkit:Chart>
+                    <ComboBox x:Name="comboBoxcpname" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Margin="0,19,0,0">
+                        <ComboBoxItem IsSelected="True">OTP</ComboBoxItem>
+                        <ComboBoxItem >MOL</ComboBoxItem>
+                        <ComboBoxItem>SHELL</ComboBoxItem>
+                        <ComboBoxItem>ERSTE</ComboBoxItem>
+                    </ComboBox>
+                    <Button x:Name="button3" Content="Frissít" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="147,21,0,0" Click="GrafikonDarabszam"/>
+                </Grid>
+            </TabItem>
 
 
         </TabControl>

@@ -21,5 +21,6 @@ namespace SimaSzamlaAdatbazissal
         public int cpValue { get; set; }
         public int cpAmount { get; set; }
         public int cpSumcom { get; set; }
+        public int cpWinning { get; set; }
     }
 }

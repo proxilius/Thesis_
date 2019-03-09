@@ -13,6 +13,7 @@
           <Property Name="cpName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="cpDB" Type="int" Nullable="false" />
           <Property Name="cpFulValue" Type="int" Nullable="false" />
+          <Property Name="cpDate" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="ActualTable">
           <Key>
@@ -49,6 +50,7 @@
           <Property Name="cp_time" Type="time" Precision="7" Nullable="false" />
           <Property Name="cp_value" Type="int" Nullable="false" />
           <Property Name="cp_amount" Type="int" Nullable="false" />
+          <Property Name="sumcom" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CommercialPaperSells">
           <Key>
@@ -61,6 +63,7 @@
           <Property Name="cpValue" Type="int" Nullable="false" />
           <Property Name="cpAmount" Type="int" Nullable="false" />
           <Property Name="cpSumcom" Type="int" Nullable="false" />
+          <Property Name="cpWinning" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="RateTable">
           <Key>
@@ -122,6 +125,7 @@
           <Property Name="cp_time" Type="Time" Nullable="false" Precision="7" />
           <Property Name="cp_value" Type="Int32" Nullable="false" />
           <Property Name="cp_amount" Type="Int32" Nullable="false" />
+          <Property Name="sumcom" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="RateTable">
           <Key>
@@ -144,6 +148,7 @@
           <Property Name="cpValue" Type="Int32" Nullable="false" />
           <Property Name="cpAmount" Type="Int32" Nullable="false" />
           <Property Name="cpSumcom" Type="Int32" Nullable="false" />
+          <Property Name="cpWinning" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="ActualDBTable">
           <Key>
@@ -153,6 +158,7 @@
           <Property Name="cpName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="cpDB" Type="Int32" Nullable="false" />
           <Property Name="cpFulValue" Type="Int32" Nullable="false" />
+          <Property Name="cpDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="CommercialPaperFix">
           <Key>
@@ -198,6 +204,7 @@
           <EntitySetMapping Name="CommercialPapers">
             <EntityTypeMapping TypeName="SzamlaModel.CommercialPapers">
               <MappingFragment StoreEntitySet="CommercialPapers">
+                <ScalarProperty Name="sumcom" ColumnName="sumcom" />
                 <ScalarProperty Name="cp_amount" ColumnName="cp_amount" />
                 <ScalarProperty Name="cp_value" ColumnName="cp_value" />
                 <ScalarProperty Name="cp_time" ColumnName="cp_time" />
@@ -221,6 +228,7 @@
           <EntitySetMapping Name="CommercialPaperSells">
             <EntityTypeMapping TypeName="SzamlaModel.CommercialPaperSells">
               <MappingFragment StoreEntitySet="CommercialPaperSells">
+                <ScalarProperty Name="cpWinning" ColumnName="cpWinning" />
                 <ScalarProperty Name="cpSumcom" ColumnName="cpSumcom" />
                 <ScalarProperty Name="cpAmount" ColumnName="cpAmount" />
                 <ScalarProperty Name="cpValue" ColumnName="cpValue" />
@@ -234,6 +242,7 @@
           <EntitySetMapping Name="ActualDBTable">
             <EntityTypeMapping TypeName="SzamlaModel.ActualDBTable">
               <MappingFragment StoreEntitySet="ActualDBTable">
+                <ScalarProperty Name="cpDate" ColumnName="cpDate" />
                 <ScalarProperty Name="cpFulValue" ColumnName="cpFulValue" />
                 <ScalarProperty Name="cpDB" ColumnName="cpDB" />
                 <ScalarProperty Name="cpName" ColumnName="cpName" />

@@ -55,6 +55,7 @@ namespace SimaSzamlaAdatbazissal
                 cp.cp_time =TimeSpan.Parse( tbTime.Text);
                 cp.cp_value = Convert.ToInt32(tbValue.Text);
                 cp.cp_amount= Convert.ToInt32(tbAmount.Text);
+                cp.sumcom = cp.cp_amount * cp.cp_value;
                 uj.CommercialPapers.Add(cp);
                 uj.SaveChanges();
 
@@ -63,6 +64,7 @@ namespace SimaSzamlaAdatbazissal
                 cpfix.cp_time =tbTime.Text;
                 cpfix.cp_value = Convert.ToInt32(tbValue.Text);
                 cpfix.cp_amount = Convert.ToInt32(tbAmount.Text);
+                cpfix.sumcom = cpfix.cp_value * cpfix.cp_amount;
                 uj.CommercialPaperFix.Add(cpfix);
                 uj.SaveChanges();
 
@@ -86,9 +88,9 @@ namespace SimaSzamlaAdatbazissal
                 m.dataGridCommercialFix.ItemsSource = b;
                 m.CommercialPapersDataGrid.ItemsSource = uj.CommercialPapers.ToList();
                 m.dataGridActual.ItemsSource = uj.ActualTable.ToList();
-                
-               
 
+
+                m.actualDBS();
                 MessageBox.Show("Sikeres hozzáadás");
                 this.Close();
                 m.Show();
