@@ -141,6 +141,7 @@ namespace SimaSzamlaAdatbazissal
             makediagram();
             //actualDBS();
             grafikonReszvenyDarabszam();
+            grafikonReszvenyErtek();
 
 
 
@@ -835,6 +836,38 @@ namespace SimaSzamlaAdatbazissal
         private void GrafikonDarabszam(object sender, RoutedEventArgs e)
         {
             grafikonReszvenyDarabszam();
+        }
+
+        private void grafikonReszvenyErtek()
+        {
+            string nameofPaper = comboBox2.Text.ToString();
+            int actualPriceOfPaper = 1;
+            foreach (var i in DB.RateTable.ToList())
+            {
+                if (i.NameOfpaper.Contains(nameofPaper))
+                {
+                    actualPriceOfPaper = i.Price;
+                }
+            }
+            List<KeyValuePair<string, int>> datalist3 = new List<KeyValuePair<string, int>>();
+            List<ActualDBTable> data3 = new List<ActualDBTable>();
+            data3 = DB.ActualDBTable.ToList();
+            var dataSourceList3 = new List<List<KeyValuePair<string, int>>>();
+            foreach (var i in data3)
+            {
+                if (i.cpName.Contains(nameofPaper))
+                {
+                    datalist3.Add(new KeyValuePair<string, int>(i.cpDate, i.cpDB*actualPriceOfPaper));
+                }
+            }
+            dataSourceList3.Add(datalist3);
+            lineChartForPaperValue.DataContext = dataSourceList3;
+        }
+
+        private void GrafikonReszvenyErtek(object sender, RoutedEventArgs e)
+        {
+            grafikonReszvenyErtek();
+            
         }
     }
 }
