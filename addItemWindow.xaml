@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimaSzamlaAdatbazissal"
         mc:Ignorable="d"
-        Title="addItemWindow" Height="382.5" Width="297.5" Closing="refresh">
+        Title="addItemWindow" Height="535.633" Width="297.5" Closing="refresh">
     <Grid Margin="0,0,-560,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="38*"/>
@@ -17,11 +17,13 @@
         <Label x:Name="labelName" Content="Új tétel hozzáadása" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="531" Grid.ColumnSpan="5" FontFamily="Times New Roman" FontSize="30" FontWeight="Bold"/>
         <Label x:Name="labelMegnevezes" Content="Megnevezés" HorizontalAlignment="Left" Margin="10,80,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2" FontFamily="Times New Roman" FontSize="20" FontWeight="Bold"/>
         <Label x:Name="labelDatum" Content="Dátum" HorizontalAlignment="Left" Margin="10,146,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="20" FontFamily="Times New Roman"/>
-        <Label x:Name="labelOsszeg" Content="Összeg" HorizontalAlignment="Left" Margin="10,207,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" FontFamily="Times New Roman" FontSize="20"/>
+        <Label x:Name="labelOsszeg" Content="Összeg" HorizontalAlignment="Left" Margin="10,282,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" FontFamily="Times New Roman" FontSize="20"/>
         <TextBox x:Name="textBoxMegnevezes" HorizontalAlignment="Left" Height="23" Margin="10,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="234" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="textBoxOsszeg" HorizontalAlignment="Left" Height="22" Margin="10,245,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="234" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="textBoxDatum" HorizontalAlignment="Left" Height="23" Margin="10,179,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="234" Grid.Column="1" Grid.ColumnSpan="2"/>
-        <Button x:Name="buttonAdd" Content="Hozzáad" HorizontalAlignment="Left" Margin="10,303,0,0" VerticalAlignment="Top" Width="218" Height="38" Click="addDataToDatabase" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="textBoxOsszeg" HorizontalAlignment="Left" Height="22" Margin="10,329,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="234" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Button x:Name="buttonAdd" Content="Hozzáad" HorizontalAlignment="Left" Margin="10,368,0,0" VerticalAlignment="Top" Width="218" Height="38" Click="addDataToDatabase" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <DatePicker Name="datepicker" Grid.Column="1" HorizontalAlignment="Left" Margin="10,179,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="234"/>
+        <Button x:Name="button" Grid.ColumnSpan="2" Content="Jelenlegi idő" Grid.Column="1" HorizontalAlignment="Left" Margin="10,240,0,0" VerticalAlignment="Top" Width="75" Click="getNowTime"/>
+        <TextBlock x:Name="textBlock" Grid.Column="2" HorizontalAlignment="Left" Margin="74,244,0,0" TextWrapping="Wrap" Text="Időpont" VerticalAlignment="Top" Width="74" FontWeight="Bold"/>
 
     </Grid>
 </Window>

@@ -136,14 +136,14 @@ namespace SimaSzamlaAdatbazissal
             List<Szamlak> a = DB.Szamlak.ToList();
             
             InitializeComponent();
-
+            allMoney();
             makediagramSeperate();
             makediagram();
-            //actualDBS();
+            actualDBS();
             grafikonReszvenyDarabszam();
             grafikonReszvenyErtek();
-
-
+            sumOfCommercialPaper();
+            
 
             CenterWindowOnScreen();
 
@@ -369,10 +369,12 @@ namespace SimaSzamlaAdatbazissal
                     }
                     ActualTable actualdbs = new ActualTable();
                     int firstvalueforactual = 0;//amikor meg nincs ertekpapir 
+                    int preveousHuf = 0;
                     foreach (var i in DB.ActualTable)
                     {
                         if (i.Name.Contains(selling.cp_name))
                             firstvalueforactual = i.AmountAfterChange;
+                        preveousHuf = i.huf;
                     }
                     actualdbs.Name = selling.cp_name;
                     actualdbs.DateOf = DateTime.Today.ToString("yyyy.MM.dd");
@@ -381,6 +383,10 @@ namespace SimaSzamlaAdatbazissal
                     actualdbs.actualRate = actualPriceOfPaper;
                     actualdbs.AmountAfterChange = firstvalueforactual- Convert.ToInt32(amountBox.Text);
                     actualdbs.Sum = actualdbs.actualRate * actualdbs.AmountAfterChange;
+                    if (winning > 0)
+                        actualdbs.huf = preveousHuf + (actualPriceOfPaper * Convert.ToInt32(amountBox.Text)) + winning;
+                    else
+                        actualdbs.huf = preveousHuf + (actualPriceOfPaper * Convert.ToInt32(amountBox.Text));
                     DB.ActualTable.Add(actualdbs);
                     DB.SaveChanges();
                     dataGridActual.ItemsSource = DB.ActualTable.ToList();
@@ -406,6 +412,7 @@ namespace SimaSzamlaAdatbazissal
         {
             int actualPriceOfPaper = 0;
             int winningFifo = 0;
+            int allMoney = 0;//AZ az osszeg amit hozza kell adni a kezpenz allomanyhoz, nyereseg+amibe kerult a paper
             string name = fifoname.Text.ToString();
             int amount = Convert.ToInt32(fifoamount.Text);//ennyit akarunk eladni
             int actualPaperAmount = 0;
@@ -430,23 +437,7 @@ namespace SimaSzamlaAdatbazissal
                 }
                 MessageBox.Show("Név\n" + nevek + "\n" + actualPaperAmount);
 
-                ActualTable actualdbs = new ActualTable();
-                int firstvalueforactual = 0;//amikor meg nincs ertekpapir 
-                foreach (var l in DB.ActualTable)
-                {
-                    if (l.Name.Contains(name))
-                        firstvalueforactual = l.AmountAfterChange;
-                }
-                actualdbs.Name = name;
-                actualdbs.DateOf = DateTime.Today.ToString("yyyy.MM.dd");
-                actualdbs.TimeOf = DateTime.Now.ToString("HH:mm:ss");
-                actualdbs.Change = 0 - amount;
-                actualdbs.actualRate = actualPriceOfPaper;
-                actualdbs.AmountAfterChange = firstvalueforactual - amount;
-                actualdbs.Sum = actualdbs.actualRate * actualdbs.AmountAfterChange;
-                DB.ActualTable.Add(actualdbs);
-                DB.SaveChanges();
-                dataGridActual.ItemsSource = DB.ActualTable.ToList();
+                
 
                 foreach (var i in sortedcplist)
                 {
@@ -455,7 +446,7 @@ namespace SimaSzamlaAdatbazissal
                     if (actualdb <= 0)
                     {
                         winningFifo = (actualPriceOfPaper * i.cp_amount) - (i.cp_amount * i.cp_value);
-
+                        allMoney+= (actualPriceOfPaper * i.cp_amount);
                         selled.cpName = i.cp_name;
                         selled.cpAmount = i.cp_amount;
                         selled.cpDate = DateTime.Today.ToString("yyyy.MM.dd");
@@ -474,7 +465,7 @@ namespace SimaSzamlaAdatbazissal
                     else
                     {
                         winningFifo += (actualPriceOfPaper * amount) - (amount * i.cp_value);
-
+                        allMoney += (actualPriceOfPaper * amount); 
                         selled.cpName = i.cp_name;
                         selled.cpAmount = amount;
                         selled.cpDate = DateTime.Today.ToString("yyyy.MM.dd");
@@ -497,7 +488,26 @@ namespace SimaSzamlaAdatbazissal
                     }
                    
                 }
-
+                ActualTable actualdbs = new ActualTable();
+                int firstvalueforactual = 0;//amikor meg nincs ertekpapir 
+                int preveousHuf = 0;
+                foreach (var l in DB.ActualTable)
+                {
+                    if (l.Name.Contains(name))
+                        firstvalueforactual = l.AmountAfterChange;
+                    preveousHuf = l.huf;
+                }
+                actualdbs.Name = name;
+                actualdbs.DateOf = DateTime.Today.ToString("yyyy.MM.dd");
+                actualdbs.TimeOf = DateTime.Now.ToString("HH:mm:ss");
+                actualdbs.Change = 0 - amount;
+                actualdbs.actualRate = actualPriceOfPaper;
+                actualdbs.AmountAfterChange = firstvalueforactual - amount;
+                actualdbs.Sum = actualdbs.actualRate * actualdbs.AmountAfterChange;
+                actualdbs.huf = preveousHuf+allMoney;
+                DB.ActualTable.Add(actualdbs);
+                DB.SaveChanges();
+                dataGridActual.ItemsSource = DB.ActualTable.ToList();
 
                 actualDBS();
                 MessageBox.Show("Árfolyam: "+actualPriceOfPaper+"\nNyereseg: "+winningFifo+"\n neve: "+name);
@@ -804,14 +814,31 @@ namespace SimaSzamlaAdatbazissal
             List<CommercialPapers> filterredList = new List< CommercialPapers > ();
             string kezdo = BeginDate.ToString();
             string vegso = EndDate.ToString();
+            int sumofOTP=0, sumofErste=0, sumofMol = 0;
+            int allSum = 0;
+
             foreach (var i in listofAllCommercialPaper)
             {
                 if (DateTime.Parse(i.cp_date) > DateTime.Parse(kezdo) && DateTime.Parse(i.cp_date) < DateTime.Parse(vegso))
                 {
                     filterredList.Add(i);
+                    if (i.cp_name.Contains("OTP"))
+                    {
+                        sumofOTP += i.cp_value;
+                    }
+                    if (i.cp_name.Contains("MOL"))
+                    {
+                        sumofMol += i.cp_value;
+                    }
+                    if (i.cp_name.Contains("ERSTE"))
+                    {
+                        sumofErste += i.cp_value;
+                    }
+                    allSum += i.cp_value;
                 }
             }
             dataGridFilterByDate.ItemsSource = filterredList;
+            textBlockSumForMonth.Text = "Összesen: "+allSum+" Ft\nEbből\nOTP: "+sumofOTP+" Ft\nMOL: "+sumofMol+" Ft\nERSTE: "+sumofErste;
 
         }
 
@@ -862,12 +889,149 @@ namespace SimaSzamlaAdatbazissal
             }
             dataSourceList3.Add(datalist3);
             lineChartForPaperValue.DataContext = dataSourceList3;
+            
         }
 
         private void GrafikonReszvenyErtek(object sender, RoutedEventArgs e)
         {
             grafikonReszvenyErtek();
             
+        }
+
+        private void ChangeSize(object sender, RoutedEventArgs e)
+        {
+            int L = Convert.ToInt32(textBoxHeight.Text);
+            int W = Convert.ToInt32(textBoxWidth.Text);
+            graphicGrid.Width = W;
+            graphicGrid.Height = L;
+        }
+
+        private void ChangeSize2(object sender, RoutedEventArgs e)
+        {
+            int L = Convert.ToInt32(textBoxHeight2.Text);
+            int W = Convert.ToInt32(textBoxWidth2.Text);
+            graphicGrid2.Width = W;
+            graphicGrid2.Height = L;
+        }
+
+        public void sumOfCommercialPaper()
+        {
+            int sum = 0;
+            int szamlasum = 0;
+            foreach (var i in DB.CommercialPaperFix.ToList())
+            {
+                sum += i.sumcom;
+                if (i.cp_name.Contains("Számla"))
+                {
+                    szamlasum += i.cp_value;
+                }
+            }
+            textBlockSum.Text = "Összesen: "+sum+" Ft\nEbből számlatétel: "+szamlasum+" Ft";
+        }
+
+        private void addAsHuf(object sender, RoutedEventArgs e)
+        {
+            int id = 0;
+            try
+            {
+                id = (SzamlaDatagrid.SelectedItem as Szamlak).Id;
+                Szamlak trans = new Szamlak();
+                Szamlak uj = new Szamlak();
+                CommercialPaperFix huf = new CommercialPaperFix();
+                ActualTable act = new ActualTable();
+                trans = DB.Szamlak.Where(d => d.Id == id).First();
+                uj.Datum = trans.Datum;
+                uj.Idopont = DateTime.Now.ToString("HH:mm:ss");
+                uj.Datum = DateTime.Today.ToString("yyyy.MM.dd");
+                uj.Megnevezes = trans.Megnevezes;
+                uj.Osszeg = 0-trans.Osszeg;
+
+                huf.cp_name = "HUF: " + trans.Megnevezes; ;
+                huf.cp_value = trans.Osszeg;
+                huf.cp_date = DateTime.Today.ToString("yyyy.MM.dd");
+                huf.cp_time = DateTime.Now.ToString("HH:mm:ss");
+                huf.cp_amount = 1;
+
+                int prevHuf = 0;
+                foreach (var i in DB.ActualTable)
+                {
+                    prevHuf = i.huf;
+                }
+
+                act.Name = "HUF";
+                act.AmountAfterChange=0;
+                act.Change = 0;
+                act.DateOf = DateTime.Now.ToString("yyyy.MM.dd");
+                act.actualRate = 0;
+                act.huf = prevHuf+trans.Osszeg;
+                act.TimeOf = DateTime.Now.ToString("HH:mm:ss");
+
+                DB.CommercialPaperFix.Add(huf);
+                DB.ActualTable.Add(act);
+                DB.Szamlak.Add(uj);
+                DB.SaveChanges();
+                dataGridCommercialFix.ItemsSource = DB.CommercialPaperFix.ToList();
+                SzamlaDatagrid.ItemsSource = DB.Szamlak.ToList();
+               
+                szamol2();
+                makeSubtotal(DB.Szamlak.ToList());
+            }
+            catch
+            {
+                MessageBox.Show("Hiba, jelölje ki az átvinni kivánt sort.");
+            }
+        }
+        public Dictionary<string, int> dateDict { get; set; }
+        public void allMoney()
+        {
+            dateDict = new Dictionary<string, int>();
+            List<ActualDBTable> darabok = new List<ActualDBTable>();
+            List<string> dates = new List<string>();
+            List<string> DatesDistinct = new List<string>();
+
+            
+            darabok = DB.ActualDBTable.ToList();
+            foreach (var i in darabok)
+            {
+                dates.Add(i.cpDate);
+            }
+
+            DatesDistinct = dates.Distinct().ToList();
+            foreach (var i in DatesDistinct)
+            {
+                dateDict.Add(i, 0);
+            }
+
+            foreach (var i in darabok)
+            {
+                
+                dateDict[i.cpDate] += i.cpFulValue;
+            }
+
+            List<KeyValuePair<string, int>> datalist = new List<KeyValuePair<string, int>>();
+            List<KeyValuePair<string, int>> datalistPlusHuf = new List<KeyValuePair<string, int>>();
+            List<RateTable> data = new List<RateTable>();
+            data = DB.RateTable.ToList();
+            var dataSourceList2 = new List<List<KeyValuePair<string, int>>>();
+            string nameofPaper = comboBox1.Text.ToString();
+            foreach (var i in dateDict)
+            {
+                int huf = 0;
+                foreach (var k in DB.ActualTable.ToList())
+                {
+                    if (DateTime.Parse(k.DateOf) < DateTime.Parse(i.Key))
+                    {
+                        huf = k.huf;
+                    }
+                }               
+                datalist.Add(new KeyValuePair<string, int>(i.Key ,i.Value));
+                datalistPlusHuf.Add(new KeyValuePair<string, int>(i.Key, i.Value+huf));
+            }
+            dataSourceList2.Add(datalist);
+            dataSourceList2.Add(datalistPlusHuf);
+            lineChartForPaperSum.DataContext = dataSourceList2;
+
+
         }
     }
 }

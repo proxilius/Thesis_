@@ -35,12 +35,16 @@ namespace SimaSzamlaAdatbazissal
             {
                 temp.Megnevezes = textBoxMegnevezes.Text;
                 temp.Osszeg = Convert.ToInt32(textBoxOsszeg.Text);
-                temp.Datum = textBoxDatum.Text;
+                temp.Datum =datepicker.Text;
+                temp.Idopont = textBlock.Text;
+
                 uj.Szamlak.Add(temp);
                 uj.SaveChanges();
 
                 m.SzamlaDatagrid.ItemsSource = uj.Szamlak.ToList();
+                m.dataGridCommercialFix.ItemsSource = uj.CommercialPaperFix.ToList();
                 m.makeSubtotal(uj.Szamlak.ToList());
+                m.sumOfCommercialPaper();
 
                 m.szamol2();
 
@@ -57,6 +61,11 @@ namespace SimaSzamlaAdatbazissal
         private void refresh(object sender, System.ComponentModel.CancelEventArgs e)
         {
             
+        }
+
+        private void getNowTime(object sender, RoutedEventArgs e)
+        {
+            textBlock.Text = DateTime.Now.ToString("HH: mm:ss");
         }
     }
 }

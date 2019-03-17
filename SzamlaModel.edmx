@@ -27,6 +27,7 @@
           <Property Name="AmountAfterChange" Type="int" Nullable="false" />
           <Property Name="Sum" Type="int" Nullable="false" />
           <Property Name="actualRate" Type="int" Nullable="false" />
+          <Property Name="huf" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CommercialPaperFix">
           <Key>
@@ -83,6 +84,7 @@
           <Property Name="Megnevezes" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Osszeg" Type="int" Nullable="false" />
           <Property Name="Datum" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Idopont" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityContainer Name="SzamlaModelStoreContainer">
           <EntitySet Name="ActualDBTable" EntityType="Self.ActualDBTable" Schema="dbo" store:Type="Tables" />
@@ -105,6 +107,7 @@
           <Property Name="Megnevezes" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Osszeg" Type="Int32" Nullable="false" />
           <Property Name="Datum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Idopont" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="SzamlaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Szamlak" EntityType="Self.Szamlak" />
@@ -184,6 +187,7 @@
           <Property Name="AmountAfterChange" Type="Int32" Nullable="false" />
           <Property Name="Sum" Type="Int32" Nullable="false" />
           <Property Name="actualRate" Type="Int32" Nullable="false" />
+          <Property Name="huf" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -194,6 +198,7 @@
           <EntitySetMapping Name="Szamlak">
             <EntityTypeMapping TypeName="SzamlaModel.Szamlak">
               <MappingFragment StoreEntitySet="Szamlak">
+                <ScalarProperty Name="Idopont" ColumnName="Idopont" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Megnevezes" ColumnName="Megnevezes" />
                 <ScalarProperty Name="Osszeg" ColumnName="Osszeg" />
@@ -266,6 +271,7 @@
           <EntitySetMapping Name="ActualTable">
             <EntityTypeMapping TypeName="SzamlaModel.ActualTable">
               <MappingFragment StoreEntitySet="ActualTable">
+                <ScalarProperty Name="huf" ColumnName="huf" />
                 <ScalarProperty Name="actualRate" ColumnName="actualRate" />
                 <ScalarProperty Name="Sum" ColumnName="Sum" />
                 <ScalarProperty Name="AmountAfterChange" ColumnName="AmountAfterChange" />

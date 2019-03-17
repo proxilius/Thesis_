@@ -22,5 +22,6 @@ namespace SimaSzamlaAdatbazissal
         public int AmountAfterChange { get; set; }
         public int Sum { get; set; }
         public int actualRate { get; set; }
+        public int huf { get; set; }
     }
 }

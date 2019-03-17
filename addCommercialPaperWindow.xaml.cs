@@ -28,8 +28,9 @@ namespace SimaSzamlaAdatbazissal
 
         private void addCommercialToDatabase(object sender, RoutedEventArgs e)
         {
-            int firstvalueforactual = 0;//amikor meg nincs ertekpapir 
+            int firstAMountAfterChange = 0;//amikor meg nincs ertekpapir 
             int actualPriceOfPaper = 0;
+            int firstHuf = 0;
             SzamlaEntities uj = new SzamlaEntities();
             CommercialPapers cp = new CommercialPapers();
             CommercialPaperFix cpfix = new CommercialPaperFix();
@@ -46,7 +47,14 @@ namespace SimaSzamlaAdatbazissal
                 foreach(var i in uj.ActualTable)
                 {
                     if(i.Name.Contains(comboBox.Text.ToString()))
-                    firstvalueforactual = i.AmountAfterChange;
+                    firstAMountAfterChange = i.AmountAfterChange;
+                }
+                foreach (var i in uj.ActualTable.ToList())
+                {
+                    if (i.Name.Contains("HUF"))
+                    {
+                        firstHuf = i.huf;
+                    }
                 }
 
 
@@ -73,8 +81,9 @@ namespace SimaSzamlaAdatbazissal
                 actualdbs.TimeOf= tbTime.Text;
                 actualdbs.Change= Convert.ToInt32(tbAmount.Text);
                 actualdbs.actualRate = actualPriceOfPaper;
-                actualdbs.AmountAfterChange = Convert.ToInt32(tbAmount.Text) + firstvalueforactual;
+                actualdbs.AmountAfterChange = Convert.ToInt32(tbAmount.Text) + firstAMountAfterChange;
                 actualdbs.Sum = actualdbs.actualRate * actualdbs.AmountAfterChange;
+                actualdbs.huf = firstHuf - cpfix.sumcom;
                 uj.ActualTable.Add(actualdbs);
                 uj.SaveChanges();
 
