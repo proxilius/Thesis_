@@ -176,7 +176,6 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <Label x:Name="label9_Copy" Content="Összes tranzakció" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="782,148,0,0" FontSize="16" FontWeight="Bold" Grid.ColumnSpan="2"/>
                     <Label x:Name="label8_Copy" Content="Aktuális batch" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="766,25,0,0" Grid.Row="1" FontWeight="Bold" FontSize="16"/>
                     <TextBlock x:Name="textBlockSum" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Összesen: " VerticalAlignment="Top" Margin="258,330,0,0" Height="69" Grid.RowSpan="2" Width="296" FontWeight="Bold" FontSize="20"/>
                 </Grid>
@@ -184,7 +183,8 @@
             </TabItem>
             <TabItem Header="Tranzakciók">
                 <Grid>
-                    <DataGrid x:Name="dataGridActual" HorizontalAlignment="Left" VerticalAlignment="Top" Height="198" Width="918" Margin="10,32,0,0" AutoGenerateColumns="False">
+                    <Label x:Name="label9_Copy" Content="Összes tranzakció" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="26,10,0,0" FontSize="20" FontWeight="Bold" Width="255" Height="50"/>
+                    <DataGrid x:Name="dataGridActual" HorizontalAlignment="Left" VerticalAlignment="Top" Height="318" Width="1166" Margin="26,51,0,0" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="0.5*" Header="ID"/>
                             <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="1.2*" Header="Név"/>
@@ -198,12 +198,29 @@
 
                         </DataGrid.Columns>
                     </DataGrid>
+                    <DatePicker Name="BeginDate" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="393,392,0,0"/>
+                    <DatePicker Name="EndDate" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="579,392,0,0"/>
+                    <Button x:Name="button8" Content="Listáz" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Margin="752,392,0,0" Click="listTransByDate"/>
+                    <DataGrid x:Name="dataGridActualFiltered" HorizontalAlignment="Left" VerticalAlignment="Top" Height="257" Width="1166" Margin="26,427,0,0" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="0.5*" Header="ID"/>
+                            <DataGridTextColumn Binding="{Binding Name}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="1.2*" Header="Név"/>
+                            <DataGridTextColumn Binding="{Binding DateOf}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Dátum" FrameworkElement.FlowDirection="RightToLeft"/>
+                            <DataGridTextColumn Binding="{Binding TimeOf}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Időpont"/>
+                            <DataGridTextColumn Binding="{Binding Change}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Változás"/>
+                            <DataGridTextColumn Binding="{Binding AmountAfterChange, StringFormat=\{0:N0\}}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="2*" Header="Változás utáni érték"/>
+                            <DataGridTextColumn Binding="{Binding actualRate, StringFormat=\{0:N0\}}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Árfolyam"/>
+                            <DataGridTextColumn Binding="{Binding Sum, StringFormat=\{0:N0\}}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Öszesen"/>
+                            <DataGridTextColumn Binding="{Binding huf, StringFormat=\{0:N0\}}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="HUF"/>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Label x:Name="label16" Content="Adott intervallumra szűrt tranzakciók" HorizontalAlignment="Left" VerticalAlignment="Top" Height="37" Width="320" Margin="26,385,0,0" FontSize="16" FontWeight="Bold"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Havi kimutatás">
                 <Grid HorizontalAlignment="Left" Height="709" VerticalAlignment="Top" Width="1329">
-                    <DatePicker Name="BeginDate" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,26,0,0"/>
-                    <DatePicker Name="EndDate" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="160,26,0,0"/>
+
                     <Label x:Name="label11" Content="Kezdő dátum" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0"/>
                     <Label x:Name="label12" Content="Végső dátum" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="160,0,0,0"/>
                     <DataGrid x:Name="dataGridFilterByDate" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,71,0,0" Width="453" Height="220"/>
@@ -387,6 +404,7 @@
 
 
             </TabItem>
+            <Label x:Name="label17" Content="Label" Height="100" Width="100"/>
 
 
         </TabControl>
