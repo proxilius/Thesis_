@@ -221,11 +221,17 @@
             <TabItem Header="Havi kimutatás">
                 <Grid HorizontalAlignment="Left" Height="709" VerticalAlignment="Top" Width="1329">
 
-                    <Label x:Name="label11" Content="Kezdő dátum" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0"/>
-                    <Label x:Name="label12" Content="Végső dátum" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="160,0,0,0"/>
-                    <DataGrid x:Name="dataGridFilterByDate" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,71,0,0" Width="453" Height="220"/>
-                    <Button x:Name="button2" Content="Listáz" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="388,30,0,0" Click="ListPapersByDate"/>
-                    <TextBlock x:Name="textBlockSumForMonth" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Összesen" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Margin="10,318,0,0"/>
+                    <Label x:Name="label11" Content="Dátum megadása: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,8,0,0" FontWeight="Bold" FontSize="14"/>
+                    <DataGrid x:Name="dataGridSumOnDate" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,42,0,0" Width="453" Height="95"/>
+                    <Button x:Name="button2" Content="Mutat" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Margin="284,14,0,0" Click="CommercialPapersOnDate"/>
+                    <TextBlock x:Name="textBlockSumForMonth" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Összesen" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Margin="494,12,0,0"/>
+                    <DatePicker Name="dateOftheday" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="146,10,0,0"/>
+                    <chartingToolkit:Chart  Name="PieChart12" Title="Kördiagram" Width="1309"
+                        VerticalAlignment="Top" Margin="10,142,0,0" Height="557" HorizontalAlignment="Left">
+                        <chartingToolkit:PieSeries DependentValuePath="Value"
+                        IndependentValuePath="Key" ItemsSource="{Binding}"
+                        IsSelectionEnabled="True" Margin="10,0,10,10" />
+                    </chartingToolkit:Chart>
                 </Grid>
             </TabItem>
             <TabItem Header="Árfolyam">

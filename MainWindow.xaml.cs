@@ -1065,39 +1065,39 @@ namespace SimaSzamlaAdatbazissal
             lineChartCopy.DataContext = dataSourceList2;
         }
 
-        private void ListPapersByDate(object sender, RoutedEventArgs e)
-        {
-            var listofAllCommercialPaper = DB.CommercialPapers.ToList();
-            List<CommercialPapers> filterredList = new List<CommercialPapers>();
-            string kezdo = BeginDate.ToString();
-            string vegso = EndDate.ToString();
-            int sumofOTP = 0, sumofErste = 0, sumofMol = 0;
-            int allSum = 0;
+        //private void ListPapersByDate(object sender, RoutedEventArgs e)
+        //{
+        //    var listofAllCommercialPaper = DB.CommercialPapers.ToList();
+        //    List<CommercialPapers> filterredList = new List<CommercialPapers>();
+        //    string kezdo = BeginDate.ToString();
+        //    string vegso = EndDate.ToString();
+        //    int sumofOTP = 0, sumofErste = 0, sumofMol = 0;
+        //    int allSum = 0;
 
-            foreach (var i in listofAllCommercialPaper)
-            {
-                if (DateTime.Parse(i.cp_date) > DateTime.Parse(kezdo) && DateTime.Parse(i.cp_date) < DateTime.Parse(vegso))
-                {
-                    filterredList.Add(i);
-                    if (i.cp_name.Contains("OTP"))
-                    {
-                        sumofOTP += i.cp_value;
-                    }
-                    if (i.cp_name.Contains("MOL"))
-                    {
-                        sumofMol += i.cp_value;
-                    }
-                    if (i.cp_name.Contains("ERSTE"))
-                    {
-                        sumofErste += i.cp_value;
-                    }
-                    allSum += i.cp_value;
-                }
-            }
-            dataGridFilterByDate.ItemsSource = filterredList;
-            textBlockSumForMonth.Text = "Összesen: " + allSum + " Ft\nEbből\nOTP: " + sumofOTP + " Ft\nMOL: " + sumofMol + " Ft\nERSTE: " + sumofErste;
+        //    foreach (var i in listofAllCommercialPaper)
+        //    {
+        //        if (DateTime.Parse(i.cp_date) > DateTime.Parse(kezdo) && DateTime.Parse(i.cp_date) < DateTime.Parse(vegso))
+        //        {
+        //            filterredList.Add(i);
+        //            if (i.cp_name.Contains("OTP"))
+        //            {
+        //                sumofOTP += i.cp_value;
+        //            }
+        //            if (i.cp_name.Contains("MOL"))
+        //            {
+        //                sumofMol += i.cp_value;
+        //            }
+        //            if (i.cp_name.Contains("ERSTE"))
+        //            {
+        //                sumofErste += i.cp_value;
+        //            }
+        //            allSum += i.cp_value;
+        //        }
+        //    }
+        //    dataGridFilterByDate.ItemsSource = filterredList;
+        //    textBlockSumForMonth.Text = "Összesen: " + allSum + " Ft\nEbből\nOTP: " + sumofOTP + " Ft\nMOL: " + sumofMol + " Ft\nERSTE: " + sumofErste;
 
-        }
+        //}
 
         private void grafikonReszvenyDarabszam()
         {
@@ -1613,6 +1613,42 @@ namespace SimaSzamlaAdatbazissal
             }
             dataGridActualFiltered.ItemsSource = filterredList;
 
+        }
+
+        private void CommercialPapersOnDate(object sender, RoutedEventArgs e)
+        {
+            List<ActualDBTable> all = new List<ActualDBTable>();
+            List<ActualDBTable> otplist = new List<ActualDBTable>();
+            List<ActualDBTable> erstelist = new List<ActualDBTable>();
+            List<ActualDBTable> mollist = new List<ActualDBTable>();
+            List<ActualDBTable> neededValues = new List<ActualDBTable>();
+            otplist.Add(new ActualDBTable());
+            mollist.Add(new ActualDBTable());
+            erstelist.Add(new ActualDBTable());
+            all = DB.ActualDBTable.ToList();
+            foreach (var i in all)
+            {
+                if ( i.cpDate.Substring(0,11) ==dateOftheday.ToString().Substring(0,11))
+                {
+                    if(i.cpName.Contains("OTP"))
+                        otplist.Add(i);
+                    if (i.cpName.Contains("MOL"))
+                        mollist.Add(i);
+                    if (i.cpName.Contains("ERSTE"))
+                        erstelist.Add(i);
+                }
+            }
+            neededValues.Add(otplist.Last());
+            neededValues.Add(erstelist.Last());
+            neededValues.Add(mollist.Last());
+            dataGridSumOnDate.ItemsSource = neededValues;
+            List<KeyValuePair<string, int>> Values = new List<KeyValuePair<string, int>>();
+            foreach (var i in neededValues)
+            {
+                Values.Add(new KeyValuePair<string, int>(i.cpName, i.cpFulValue));
+            }
+
+            PieChart12.DataContext = Values;
         }
     }
 }
