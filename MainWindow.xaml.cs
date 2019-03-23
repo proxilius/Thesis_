@@ -128,6 +128,27 @@ namespace SimaSzamlaAdatbazissal
             this.Top = (screenHeight / 2) - (windowHeight / 2);
         }
 
+        public void sumhozam()
+        {
+            int sum=0;
+            foreach (var i in DB.CommercialPaperSells.ToList())
+            {
+                sum += i.cpWinning;
+            }
+            textBlockSumHozam.Text = "Összes hozam: "+sum+" Ft";
+        }
+
+        public void makeDiagramOfSzamlak()
+        {
+            List<KeyValuePair<string, int>> MyValue = new List<KeyValuePair<string, int>>();
+            foreach (var i in DB.Szamlak.ToList())
+            {
+                MyValue.Add(new KeyValuePair<string, int>(i.Datum+"\n"+i.Idopont, i.Osszeg));
+            }
+            ColumnChart1.DataContext = MyValue;
+        }
+
+
         public MainWindow()
         {
 
@@ -143,6 +164,8 @@ namespace SimaSzamlaAdatbazissal
             grafikonReszvenyDarabszam();
             grafikonReszvenyErtek();
             sumOfCommercialPaper();
+            sumhozam();
+            makeDiagramOfSzamlak();
 
 
             CenterWindowOnScreen();
@@ -338,7 +361,7 @@ namespace SimaSzamlaAdatbazissal
                     DB.CommercialPaperSells.Add(selled);
                     DB.SaveChanges();
                     dataGridCommercialsells.ItemsSource = DB.CommercialPaperSells.ToList();
-
+                    sumhozam();
 
                     if (selling.cp_amount == 0)
                     {
@@ -495,6 +518,7 @@ namespace SimaSzamlaAdatbazissal
                     }
 
                 }
+                sumhozam();
                 ActualTable actualdbs = new ActualTable();
                 int firstvalueforactual = 0;//amikor meg nincs ertekpapir 
                 int preveousHuf = 0;
@@ -612,6 +636,7 @@ namespace SimaSzamlaAdatbazissal
                     }
 
                 }
+                sumhozam();
                 ActualTable actualdbs = new ActualTable();
                 int firstvalueforactual = 0;//amikor meg nincs ertekpapir 
                 int preveousHuf = 0;
@@ -889,6 +914,7 @@ namespace SimaSzamlaAdatbazissal
                         dataGridCommercialsells.ItemsSource = DB.CommercialPaperSells.ToList();
                         break;//kell még actual datagrid frissites
                     }
+                    sumhozam();
                     ActualTable actualdbs = new ActualTable();
                     int firstvalueforactual = 0;//amikor meg nincs ertekpapir 
                     int preveousHuf = 0;
@@ -1012,7 +1038,7 @@ namespace SimaSzamlaAdatbazissal
 
 
                 }
-
+                sumhozam();
                 ActualTable actualdbs = new ActualTable();
                 int firstvalueforactual = 0;//amikor meg nincs ertekpapir 
                 int preveousHuf = 0;
@@ -1171,6 +1197,14 @@ namespace SimaSzamlaAdatbazissal
             graphicGrid2.Height = L;
         }
 
+        private void ChangeSize3(object sender, RoutedEventArgs e)
+        {
+            int L = Convert.ToInt32(textBoxHeight1.Text);
+            int W = Convert.ToInt32(textBoxWidth1.Text);
+            graphicSumGrid.Width = W;
+            graphicSumGrid.Height = L;
+        }
+
         public void sumOfCommercialPaper()
         {
             int sum = 0;
@@ -1178,12 +1212,12 @@ namespace SimaSzamlaAdatbazissal
             foreach (var i in DB.CommercialPaperFix.ToList())
             {
                 sum += i.sumcom;
-                if (i.cp_name.Contains("Számla"))
+                if (i.cp_name.Contains("HUF"))
                 {
                     szamlasum += i.cp_value;
                 }
             }
-            textBlockSum.Text = "Összesen: " + sum + " Ft\nEbből számlatétel: " + szamlasum + " Ft";
+            textBlockSum.Text = "Összesen: " + sum + " Ft\nEbből huf: " + szamlasum + " Ft";
         }
 
         private void addAsHuf(object sender, RoutedEventArgs e)
@@ -1351,6 +1385,7 @@ namespace SimaSzamlaAdatbazissal
         {
             int actualPriceOfPaper = 0;
             int randomWinnig = 0;
+            int allMoney = 0;
             int randomWinningSum = 0;//kell sum winnning fifohoz lifohoz az aktualis tabla huf miatt
             string name = fifoname.Text.ToString();
             foreach (var i in DB.RateTable.ToList())
@@ -1369,23 +1404,7 @@ namespace SimaSzamlaAdatbazissal
             }
             var shuffids = ids.OrderBy(a => Guid.NewGuid()).ToList();//randomize elements order
             int amount = Convert.ToInt32(fifoamount.Text);//ennyit akarunk eladni
-            ActualTable actualdbs = new ActualTable();
-            int firstvalueforactual = 0;//amikor meg nincs ertekpapir 
-            foreach (var l in DB.ActualTable)
-            {
-                if (l.Name.Contains(name))
-                    firstvalueforactual = l.AmountAfterChange;
-            }
-            actualdbs.Name = name;
-            actualdbs.DateOf = DateTime.Today.ToString("yyyy.MM.dd");
-            actualdbs.TimeOf = DateTime.Now.ToString("HH:mm:ss");
-            actualdbs.Change = 0 - amount;
-            actualdbs.actualRate = actualPriceOfPaper;
-            actualdbs.AmountAfterChange = firstvalueforactual - amount;
-            actualdbs.Sum = actualdbs.actualRate * actualdbs.AmountAfterChange;
-            DB.ActualTable.Add(actualdbs);
-            DB.SaveChanges();
-            dataGridActual.ItemsSource = DB.ActualTable.ToList();
+            
             foreach (var index in shuffids)
             {
                 var actualBatch = DB.CommercialPapers.Where(d => d.cp_id == index).First(); ;
@@ -1395,6 +1414,7 @@ namespace SimaSzamlaAdatbazissal
                 {
                     randomWinningSum += (actualPriceOfPaper * actualBatch.cp_amount) - (actualBatch.cp_amount * actualBatch.cp_value);
                     randomWinnig = (actualPriceOfPaper * actualBatch.cp_amount) - (actualBatch.cp_amount * actualBatch.cp_value);
+                    allMoney += (actualPriceOfPaper * actualBatch.cp_amount);
                     amount = amount - actualBatch.cp_amount;
                     selled.cpName = actualBatch.cp_name;
                     selled.cpAmount = actualBatch.cp_amount;
@@ -1421,6 +1441,7 @@ namespace SimaSzamlaAdatbazissal
                 {
                     randomWinningSum += (actualPriceOfPaper * actualBatch.cp_amount) - (actualBatch.cp_amount * actualBatch.cp_value);
                     randomWinnig = (actualPriceOfPaper * amount) - (amount * actualBatch.cp_value);
+                    allMoney += (actualPriceOfPaper * actualBatch.cp_amount);
                     actualBatch.cp_amount = actualBatch.cp_amount - amount;
                     selled.cpName = actualBatch.cp_name;
                     selled.cpAmount = actualBatch.cp_amount;
@@ -1440,6 +1461,27 @@ namespace SimaSzamlaAdatbazissal
                     DB.SaveChanges();
                     break;
                 }
+                sumhozam();
+                ActualTable actualdbs = new ActualTable();
+                int firstvalueforactual = 0;//amikor meg nincs ertekpapir 
+                int preveousHuf = 0;
+                foreach (var l in DB.ActualTable)
+                {
+                    if (l.Name.Contains(name))
+                        firstvalueforactual = l.AmountAfterChange;
+                    preveousHuf = l.huf;
+                }
+                actualdbs.Name = name;
+                actualdbs.DateOf = DateTime.Today.ToString("yyyy.MM.dd");
+                actualdbs.TimeOf = DateTime.Now.ToString("HH:mm:ss");
+                actualdbs.Change = 0 - amount;
+                actualdbs.actualRate = actualPriceOfPaper;
+                actualdbs.AmountAfterChange = firstvalueforactual - amount;
+                actualdbs.Sum = actualdbs.actualRate * actualdbs.AmountAfterChange;
+                actualdbs.huf = preveousHuf + allMoney;
+                DB.ActualTable.Add(actualdbs);
+                DB.SaveChanges();
+                dataGridActual.ItemsSource = DB.ActualTable.ToList();
             }
         }
 
@@ -1628,8 +1670,9 @@ namespace SimaSzamlaAdatbazissal
             all = DB.ActualDBTable.ToList();
             foreach (var i in all)
             {
-                if ( i.cpDate.Substring(0,11) ==dateOftheday.ToString().Substring(0,11))
-                {
+                //if ( i.cpDate.Substring(0,11) ==dateOftheday.ToString().Substring(0,11))
+                if (DateTime.Parse( i.cpDate) < DateTime.Parse(dateOftheday.Text+" "+textBoxforTime.Text))
+                    {
                     if(i.cpName.Contains("OTP"))
                         otplist.Add(i);
                     if (i.cpName.Contains("MOL"))
@@ -1638,9 +1681,22 @@ namespace SimaSzamlaAdatbazissal
                         erstelist.Add(i);
                 }
             }
-            neededValues.Add(otplist.Last());
-            neededValues.Add(erstelist.Last());
-            neededValues.Add(mollist.Last());
+            List<ActualDBTable> helpList = new List<ActualDBTable>();
+            helpList.AddRange(otplist);
+            helpList.AddRange(mollist);
+            helpList.AddRange(erstelist);
+            string lastDate="";
+            foreach (var i in helpList)
+            {
+                lastDate = i.cpDate;
+            }
+            if(otplist.Last().cpDate==lastDate)
+                neededValues.Add(otplist.Last());
+            if (erstelist.Last().cpDate == lastDate)
+                neededValues.Add(erstelist.Last());
+            if (mollist.Last().cpDate == lastDate)
+                neededValues.Add(mollist.Last());
+
             dataGridSumOnDate.ItemsSource = neededValues;
             List<KeyValuePair<string, int>> Values = new List<KeyValuePair<string, int>>();
             foreach (var i in neededValues)
@@ -1650,5 +1706,6 @@ namespace SimaSzamlaAdatbazissal
 
             PieChart12.DataContext = Values;
         }
+
     }
 }

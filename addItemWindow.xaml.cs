@@ -47,6 +47,7 @@ namespace SimaSzamlaAdatbazissal
                 m.sumOfCommercialPaper();
 
                 m.szamol2();
+                m.makeDiagramOfSzamlak();
 
                 MessageBox.Show("Sikeres hozzáadás");
                 this.Close();

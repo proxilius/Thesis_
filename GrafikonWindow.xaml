@@ -14,8 +14,6 @@
             VerticalAlignment="Bottom" Width="410" >
             <chartingToolkit:ColumnSeries DependentValuePath="Value" Title="Összeg"  IndependentValuePath="Key" ItemsSource="{Binding}"
             IsSelectionEnabled="True"></chartingToolkit:ColumnSeries>
-             
-
         </chartingToolkit:Chart>
     </Grid>
 </Window>

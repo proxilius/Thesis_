@@ -51,10 +51,10 @@ namespace SimaSzamlaAdatbazissal
                 }
                 foreach (var i in uj.ActualTable.ToList())
                 {
-                    if (i.Name.Contains("HUF"))
-                    {
+                    //if (i.Name.Contains("HUF"))
+                    //{
                         firstHuf = i.huf;
-                    }
+                    //}
                 }
 
 
