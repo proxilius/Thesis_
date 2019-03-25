@@ -166,7 +166,12 @@ namespace SimaSzamlaAdatbazissal
             sumOfCommercialPaper();
             sumhozam();
             makeDiagramOfSzamlak();
+            List<KeyValuePair<string, int>> Values = new List<KeyValuePair<string, int>>();
+           
+                Values.Add(new KeyValuePair<string, int>("valami",500));
 
+
+            PieChart12.DataContext = Values;
 
             CenterWindowOnScreen();
 
@@ -272,18 +277,18 @@ namespace SimaSzamlaAdatbazissal
 
         private void exportDataToExcel(object sender, RoutedEventArgs e)
         {
-            Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();
-            Microsoft.Office.Interop.Excel._Workbook workbook = excel.Workbooks.Add(Type.Missing);
-            Microsoft.Office.Interop.Excel._Worksheet worksheet = workbook.ActiveSheet;
-
+            Microsoft.Office.Interop.Excel.Application excel =
+                new Microsoft.Office.Interop.Excel.Application();
+            Microsoft.Office.Interop.Excel._Workbook workbook = 
+                excel.Workbooks.Add(Type.Missing);
+            Microsoft.Office.Interop.Excel._Worksheet worksheet = 
+                workbook.ActiveSheet;
             worksheet.Columns["A:E"].ColumnWidth = 17.57;
-
             worksheet.Cells[1, 1] = "Id";
             worksheet.Cells[1, 2] = "Megnevezés";
             worksheet.Cells[1, 3] = "Összeg";
             worksheet.Cells[1, 4] = "Dátum";
             worksheet.Cells[1, 5] = "Részösszeg";
-
             int index = 2;
             foreach (var i in DB.Szamlak)
             {
@@ -299,10 +304,8 @@ namespace SimaSzamlaAdatbazissal
                 worksheet.Cells[index, 5] = j.sub;
                 index++;
             }
-
             workbook.SaveAs("SimaSzámla");
             excel.Visible = true;
-
             MessageBox.Show("Az excel fájl sikeresen létrejött!");
 
         }
@@ -1664,37 +1667,40 @@ namespace SimaSzamlaAdatbazissal
             List<ActualDBTable> erstelist = new List<ActualDBTable>();
             List<ActualDBTable> mollist = new List<ActualDBTable>();
             List<ActualDBTable> neededValues = new List<ActualDBTable>();
-            otplist.Add(new ActualDBTable());
-            mollist.Add(new ActualDBTable());
-            erstelist.Add(new ActualDBTable());
+            //otplist.Add(new ActualDBTable());
+            //mollist.Add(new ActualDBTable());
+            //erstelist.Add(new ActualDBTable());
             all = DB.ActualDBTable.ToList();
             foreach (var i in all)
             {
-                //if ( i.cpDate.Substring(0,11) ==dateOftheday.ToString().Substring(0,11))
-                if (DateTime.Parse( i.cpDate) < DateTime.Parse(dateOftheday.Text+" "+textBoxforTime.Text))
+                if (i.cpDate.Substring(0, 11) == dateOftheday.ToString().Substring(0, 11))
+                    if (DateTime.Parse(i.cpDate) < DateTime.Parse(dateOftheday.Text.ToString() + " " + textBoxforTime.Text.ToString()))
                     {
-                    if(i.cpName.Contains("OTP"))
-                        otplist.Add(i);
-                    if (i.cpName.Contains("MOL"))
-                        mollist.Add(i);
-                    if (i.cpName.Contains("ERSTE"))
-                        erstelist.Add(i);
-                }
+                        if (i.cpName.Contains("OTP"))
+                            otplist.Add(i);
+                        if (i.cpName.Contains("MOL"))
+                            mollist.Add(i);
+                        if (i.cpName.Contains("ERSTE"))
+                            erstelist.Add(i);
+                    }
             }
+            //MessageBox.Show(dateOftheday.Text.ToString() + " " + textBoxforTime.Text.ToString());
             List<ActualDBTable> helpList = new List<ActualDBTable>();
             helpList.AddRange(otplist);
             helpList.AddRange(mollist);
             helpList.AddRange(erstelist);
-            string lastDate="";
+            DateTime maxDate= DateTime.MinValue;
             foreach (var i in helpList)
             {
-                lastDate = i.cpDate;
+                DateTime date = DateTime.Parse(i.cpDate);
+                if (date > maxDate)
+                    maxDate = date;
             }
-            if(otplist.Last().cpDate==lastDate)
+            if (otplist.Last().cpDate == maxDate.ToString())
                 neededValues.Add(otplist.Last());
-            if (erstelist.Last().cpDate == lastDate)
+            if (erstelist.Last().cpDate == maxDate.ToString())
                 neededValues.Add(erstelist.Last());
-            if (mollist.Last().cpDate == lastDate)
+            if (mollist.Last().cpDate == maxDate.ToString())
                 neededValues.Add(mollist.Last());
 
             dataGridSumOnDate.ItemsSource = neededValues;

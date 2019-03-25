@@ -9,9 +9,9 @@
         <EntityTypeShape EntityType="SzamlaModel.CommercialPapers" Width="1.5" PointX="2.5" PointY="0.625" />
         <EntityTypeShape EntityType="SzamlaModel.RateTable" Width="1.5" PointX="4.125" PointY="0.625" />
         <EntityTypeShape EntityType="SzamlaModel.CommercialPaperSells" Width="1.5" PointX="5.875" PointY="0.625" />
-        <EntityTypeShape EntityType="SzamlaModel.ActualDBTable" Width="1.5" PointX="0.625" PointY="3.125" />
-        <EntityTypeShape EntityType="SzamlaModel.CommercialPaperFix" Width="1.5" PointX="2.25" PointY="3" />
-        <EntityTypeShape EntityType="SzamlaModel.ActualTable" Width="1.5" PointX="4.125" PointY="3" />
+        <EntityTypeShape EntityType="SzamlaModel.ActualDBTable" Width="1.5" PointX="0.5" PointY="3.25" />
+        <EntityTypeShape EntityType="SzamlaModel.CommercialPaperFix" Width="1.5" PointX="2.375" PointY="3.375" />
+        <EntityTypeShape EntityType="SzamlaModel.ActualTable" Width="1.5" PointX="2.5" PointY="6.25" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

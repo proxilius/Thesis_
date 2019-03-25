@@ -100,6 +100,7 @@ namespace SimaSzamlaAdatbazissal
 
 
                 m.actualDBS();
+                
                 MessageBox.Show("Sikeres hozzáadás");
                 this.Close();
                 m.Show();

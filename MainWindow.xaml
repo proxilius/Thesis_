@@ -219,7 +219,16 @@
                     <Label x:Name="label9" Content="Aktuális&#xA; darabszám &#xA;táblázat" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="676,20,0,0" FontSize="25" FontWeight="Bold" Height="122" Width="148"/>
 
                     <Label x:Name="label11" Content="Dátum megadása: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,5,0,0" FontWeight="Bold" FontSize="14"/>
-                    <DataGrid x:Name="dataGridSumOnDate" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,42,0,0" Width="569" Height="95"/>
+                    <DataGrid x:Name="dataGridSumOnDate" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,42,0,0" Width="569" Height="95" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding cpName}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Neve"/>
+                            <DataGridTextColumn Binding="{Binding cpDate}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="2*" Header="Dátum"/>
+                            <DataGridTextColumn Binding="{Binding cpDB}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Darabszám"/>
+                            <DataGridTextColumn Binding="{Binding cpFulValue}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Összérték"/>
+
+                        </DataGrid.Columns>
+
+                    </DataGrid>
                     <DataGrid x:Name="dataGridActualAmounts" Margin="829,16,10,572" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding cpName}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Neve"/>
