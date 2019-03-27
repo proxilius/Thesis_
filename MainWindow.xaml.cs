@@ -1713,5 +1713,122 @@ namespace SimaSzamlaAdatbazissal
             PieChart12.DataContext = Values;
         }
 
+        private void sellLowestBatches(object sender, RoutedEventArgs e)
+        {
+            int actualPriceOfPaper = 0;
+            int allMoney = 0;
+            int winningFifo = 0;
+            string name = fifoname.Text.ToString();
+            int amount = Convert.ToInt32(fifoamount.Text);//ennyit akarunk eladni
+            int amountfix = Convert.ToInt32(fifoamount.Text);
+            int actualPaperAmount = 0;
+            List<CommercialPapers> cplist = new List<CommercialPapers>();
+            List<CommercialPapers> sortedcplist = new List<CommercialPapers>();
+            cplist = DB.CommercialPapers.Where(d => d.cp_name == name).ToList();
+            string nevek = "";
+            sortedcplist = cplist.OrderBy(d => d.cp_amount).ToList();
+            foreach (var i in sortedcplist)
+            {
+                nevek += i.cp_name + "," + i.cp_date + "\n";
+                if (i.cp_name.Contains(name)) actualPaperAmount += i.cp_amount;//ennyi van
+            }
+            if (actualPaperAmount >= amount)
+            {
+                foreach (var i in DB.RateTable.ToList())
+                {
+                    if (i.NameOfpaper.Contains(name))
+                    {
+                        actualPriceOfPaper = i.Price;//set actual price
+                    }
+                }
+                MessageBox.Show("Név\n" + nevek + "\n" + actualPaperAmount);
+
+
+
+                foreach (var i in sortedcplist)
+                {
+                    CommercialPaperSells selled = new CommercialPaperSells();
+                    int actualdb = i.cp_amount - amount;//10-15
+                    if (actualdb <= 0)
+                    {
+                        winningFifo = (actualPriceOfPaper * i.cp_amount) - (i.cp_amount * i.cp_value);
+                        allMoney += (actualPriceOfPaper * i.cp_amount);
+                        selled.cpName = i.cp_name;
+                        selled.cpAmount = i.cp_amount;
+                        selled.cpDate = DateTime.Today.ToString("yyyy.MM.dd");
+                        selled.cpTime = DateTime.Now.ToString("HH:mm:ss");
+                        selled.cpValue = actualPriceOfPaper;
+                        selled.cpSumcom = actualPriceOfPaper * i.cp_amount;
+                        selled.cpWinning = winningFifo;
+                        DB.CommercialPaperSells.Add(selled);
+
+
+                        DB.CommercialPapers.Remove(i);
+                        DB.SaveChanges();
+                        amount = amount - i.cp_amount;
+                        List<CommercialPapers> b = DB.CommercialPapers.ToList();
+                        foreach (var k in b)
+                        {
+                            k.sumcom = k.cp_value * k.cp_amount;
+                        }
+                        CommercialPapersDataGrid.ItemsSource = b;
+                        dataGridCommercialsells.ItemsSource = DB.CommercialPaperSells.ToList();
+                        if (actualdb == 0) break;
+                    }
+                    else
+                    {
+                        winningFifo = (actualPriceOfPaper * amount) - (amount * i.cp_value);
+                        allMoney += (actualPriceOfPaper * amount);
+                        selled.cpName = i.cp_name;
+                        selled.cpAmount = amount;
+                        selled.cpDate = DateTime.Today.ToString("yyyy.MM.dd");
+                        selled.cpTime = DateTime.Now.ToString("HH:mm:ss");
+                        selled.cpValue = actualPriceOfPaper;
+                        selled.cpSumcom = actualPriceOfPaper * amount;
+                        selled.cpWinning = winningFifo;
+                        DB.CommercialPaperSells.Add(selled);
+
+                        i.cp_amount = i.cp_amount - amount;
+                        DB.SaveChanges();
+                        List<CommercialPapers> b = DB.CommercialPapers.ToList();
+                        foreach (var k in b)
+                        {
+                            k.sumcom = k.cp_value * k.cp_amount;
+                        }
+                        CommercialPapersDataGrid.ItemsSource = b;
+                        dataGridCommercialsells.ItemsSource = DB.CommercialPaperSells.ToList();
+                        break;//kell még actual datagrid frissites
+                    }
+                    sumhozam();
+                    ActualTable actualdbs = new ActualTable();
+                    int firstvalueforactual = 0;//amikor meg nincs ertekpapir 
+                    int preveousHuf = 0;
+                    foreach (var l in DB.ActualTable)
+                    {
+                        if (l.Name.Contains(name))
+                            firstvalueforactual = l.AmountAfterChange;
+                        preveousHuf = l.huf;
+                    }
+                    actualdbs.Name = name;
+                    actualdbs.DateOf = DateTime.Today.ToString("yyyy.MM.dd");
+                    actualdbs.TimeOf = DateTime.Now.ToString("HH:mm:ss");
+                    actualdbs.Change = 0 - amountfix;
+                    actualdbs.actualRate = actualPriceOfPaper;
+                    actualdbs.AmountAfterChange = firstvalueforactual - amountfix;
+                    actualdbs.Sum = actualdbs.actualRate * actualdbs.AmountAfterChange;
+                    actualdbs.huf = preveousHuf + allMoney;
+                    DB.ActualTable.Add(actualdbs);
+                    DB.SaveChanges();
+                    dataGridActual.ItemsSource = DB.ActualTable.ToList();
+
+
+                }
+                MessageBox.Show("Árfolyam: " + actualPriceOfPaper + "\nNyereseg: " + winningFifo + "\n neve: " + name);
+            }
+            else
+            {
+                MessageBox.Show("Nincs elég értékpapír!");
+            }
+        }
     }
 }

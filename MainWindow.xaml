@@ -14,7 +14,7 @@
     <Grid Margin="0,0,0,22">
         <TabControl x:Name="tabControl" VerticalAlignment="Top" Height="743" Margin="0,0,0,-72"  >
 
-            <TabItem Header="Számla">
+            <TabItem Header="Folyószámla">
                 <Grid>
                     <Grid Margin="10,0,0,0">
 
@@ -132,6 +132,7 @@
                         </DataGrid>
                         <Label x:Name="label7" Content="Vételek" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="17,-332,0,0" FontWeight="Bold" FontSize="16"/>
                         <Button x:Name="button7" Content="Legjobb eladás" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="88" Margin="292,171,0,0" Click="bestSell"/>
+                        <Button x:Name="button9" Content="Eladás legkisebb&#xA; batch-ekből" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="88" Margin="292,239,0,0" Click="sellLowestBatches"/>
                     </Grid>
                     <Grid Grid.Row="1" Grid.Column="1">
                         <Grid.ColumnDefinitions>
@@ -214,7 +215,7 @@
                     <Label x:Name="label16" Content="Adott intervallumra szűrt tranzakciók" HorizontalAlignment="Left" VerticalAlignment="Top" Height="37" Width="320" Margin="26,385,0,0" FontSize="16" FontWeight="Bold"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Havi kimutatás">
+            <TabItem Header="Napi kimutatás">
                 <Grid HorizontalAlignment="Left" Height="709" VerticalAlignment="Top" Width="1329">
                     <Label x:Name="label9" Content="Aktuális&#xA; darabszám &#xA;táblázat" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="676,20,0,0" FontSize="25" FontWeight="Bold" Height="122" Width="148"/>
 
@@ -268,7 +269,15 @@
                     <Label x:Name="label5" Content="Ft" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125,164,0,0"/>
                     <Label x:Name="label6" Content="Időpont megadása" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="125,105,0,0"/>
                     <Button x:Name="buttonAddToRateTable" Content="Rögzít" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="0,202,0,0" Click="addPriceToDatabase"/>
-                    <DataGrid x:Name="dataGridRate" HorizontalAlignment="Left" VerticalAlignment="Top" Height="149" Width="864" Margin="325,49,0,0"/>
+                    <DataGrid x:Name="dataGridRate" HorizontalAlignment="Left" VerticalAlignment="Top" Height="149" Width="864" Margin="325,49,0,0" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Id}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="0.5*" Header="ID"/>
+                            <DataGridTextColumn Binding="{Binding NameOfpaper}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="1.7*" Header="Név"/>
+                            <DataGridTextColumn Binding="{Binding Price, StringFormat=\{0:N0\}}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="1.3*" Header="Darabár" FrameworkElement.FlowDirection="RightToLeft"/>
+                            <DataGridTextColumn Binding="{Binding DateOf}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Dátum"/>
+                            <DataGridTextColumn Binding="{Binding TimeOf}" ClipboardContentBinding="{x:Null}" Foreground="#FFA04747" Width="*" Header="Időpont"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                     <chartingToolkit:Chart Name="lineChart"
                                        Title="Árfolyam grafikon" 
                                        VerticalAlignment="Top" 
