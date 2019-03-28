@@ -1830,5 +1830,47 @@ namespace SimaSzamlaAdatbazissal
                 MessageBox.Show("Nincs elég értékpapír!");
             }
         }
+
+        private void addAsHufWithValue(object sender, RoutedEventArgs e)
+        {
+            ActualTable act = new ActualTable();
+            Szamlak uj = new Szamlak();
+            CommercialPaperFix huf = new CommercialPaperFix();
+            uj.Idopont = DateTime.Now.ToString("HH:mm:ss");
+            uj.Datum = DateTime.Today.ToString("yyyy.MM.dd");
+            uj.Megnevezes = "HUF";
+            uj.Osszeg = 0 - Convert.ToInt32(textBoxForTransportValue.Text);
+
+            huf.cp_name = "HUF: ";
+            huf.cp_value = Convert.ToInt32(textBoxForTransportValue.Text);
+            huf.cp_date = DateTime.Today.ToString("yyyy.MM.dd");
+            huf.cp_time = DateTime.Now.ToString("HH:mm:ss");
+            huf.cp_amount = 1;
+
+            int prevHuf = 0;
+            foreach (var i in DB.ActualTable)
+            {
+                prevHuf = i.huf;
+            }
+
+            act.Name = "HUF";
+            act.AmountAfterChange = 0;
+            act.Change = 0;
+            act.DateOf = DateTime.Now.ToString("yyyy.MM.dd");
+            act.actualRate = 0;
+            act.huf = prevHuf + Convert.ToInt32(textBoxForTransportValue.Text);
+            act.TimeOf = DateTime.Now.ToString("HH:mm:ss");
+
+            DB.CommercialPaperFix.Add(huf);
+            DB.ActualTable.Add(act);
+            DB.Szamlak.Add(uj);
+            DB.SaveChanges();
+            dataGridCommercialFix.ItemsSource = DB.CommercialPaperFix.ToList();
+            SzamlaDatagrid.ItemsSource = DB.Szamlak.ToList();
+
+            szamol2();
+            makeSubtotal(DB.Szamlak.ToList());
+            dataGridActual.ItemsSource = DB.ActualTable.ToList();
+        }
     }
 }

@@ -72,7 +72,9 @@
                         <Grid Grid.Column="5">
                             <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="28,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="126"><Run FontWeight="Bold" FontSize="16" FontFamily="Times New Roman" Text="Exportálás excel munkafüzetbe"/><LineBreak/><Run/></TextBlock>
                             <Button x:Name="button1" Content="Export" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top" Width="171" Click="exportDataToExcel"/>
-                            <Button x:Name="buttontoAddHuf" Content="Átvitel értékpapírszámlára" HorizontalAlignment="Left" Margin="10,112,0,0" VerticalAlignment="Top" Width="171" Click="addAsHuf"/>
+                            <Button x:Name="buttontoAddHufFix" Content="Átvitel értékpapírszámlára" HorizontalAlignment="Left" Margin="10,108,0,0" VerticalAlignment="Top" Width="171" Click="addAsHuf"/>
+                            <Button x:Name="buttontoAddHuf" Content="Átvitel értékpapírszámlára összeg megadásával" HorizontalAlignment="Left" Margin="10,158,0,0" VerticalAlignment="Top" Width="171" Click="addAsHufWithValue" Height="40"/>
+                            <TextBox x:Name="textBoxForTransportValue" HorizontalAlignment="Left" Height="21" Margin="10,203,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="56"/>
 
                         </Grid>
                     </Grid>
